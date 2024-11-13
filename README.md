@@ -1,4 +1,4 @@
-# Your project name here
+# PennyUp
 
 ## Information about this repository
 
