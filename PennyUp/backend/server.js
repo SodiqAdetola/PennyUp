@@ -26,7 +26,7 @@ admin.initializeApp({
 
 //Test
 app.get('/', (req, res) => {
-  res.send(`hello`)
+  res.send(`hello world`)
 });
 
 
