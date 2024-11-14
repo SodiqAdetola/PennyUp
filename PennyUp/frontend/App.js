@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from './firebaseConfig';
 
 
-import Login from './frontend/screens/Login';
-import Register from './frontend/screens/Register';
-import History from './frontend/screens/secure/History';
-import Home from './frontend/screens/secure/Home';
-import Leaderboard from './frontend/screens/secure/Leaderboard';
-import Trades from './frontend/screens/secure/Trades';
+import Login from './screens/Login';
+import Register from './screens/Register';
+import History from './screens/secure/History';
+import Home from './screens/secure/Home';
+import Leaderboard from './screens/secure/Leaderboard';
+import Trades from './screens/secure/Trades';
 
 
 

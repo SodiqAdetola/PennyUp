@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import { signOut } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../../../firebaseConfig'
+import { FIREBASE_AUTH } from '../../firebaseConfig'
 
 const Home = ({ token }) => {
 

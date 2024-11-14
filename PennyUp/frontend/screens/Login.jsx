@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { FIREBASE_AUTH } from '../../firebaseConfig'
+import { FIREBASE_AUTH } from '../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
 const Login = ( { navigation } ) => {

@@ -11,7 +11,10 @@ app.use(cors())
 app.use(express.json())
 
 //Connect to mongodb database
-mongoose.connect(process.env.mongoURI, { userNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { 
+    userNewUrlParser: true,
+     useUnifiedTopology: true 
+    })
     .then(() => console.log("Connected to mongoDB"))
     .catch(error => console.log(error))
 
@@ -22,7 +25,8 @@ app.get('/', (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
     }); // Starts the server

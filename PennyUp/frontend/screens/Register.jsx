@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../../firebaseConfig'
+import { FIREBASE_AUTH } from '../firebaseConfig'
 
 const Register = ( { navigation } ) => {
 
