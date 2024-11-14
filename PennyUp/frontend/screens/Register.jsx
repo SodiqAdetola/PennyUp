@@ -13,33 +13,26 @@ const Register = ( { navigation } ) => {
 
 
   const registerHandler = async () => {
-    if (password != confirmPassword) {
-      alert(' Password does not match!')
+    if (username == '') {
+        alert(' Please enter a Username!')
+        return;
     }
-    else {
-      try {
+    if (password != confirmPassword) {
+        alert(' Password does not match!')
+        return;
+    }
+    
+    try {
         const response = await createUserWithEmailAndPassword(auth, email, confirmPassword);
         const user = response.user;
-        const firebaseUID = user.uid;
-
-        const token = await user.getIdToken();
-
-        const res = await fetch("http://localhost:5001/api/user/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ username, firebaseUID }),
-        });
 
         console.log(response)
         console.log('user registered')
 
       } catch(error) {
         alert('Sign up failed: ' + error.message)
-      }
     }
+    
   }
 
 
