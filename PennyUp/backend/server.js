@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 var admin = require("firebase-admin");
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require("process.env.FIREBASE_CREDENTIALS");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
