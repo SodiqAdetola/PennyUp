@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../firebaseConfig'
 
 import axios from 'axios';
-const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com/'
+const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com'
 
 
 const Register = ( { navigation } ) => {

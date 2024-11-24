@@ -30,6 +30,8 @@ exports.createUser = async (req, res) => {
 exports.getUserByUID = async (req, res) => {
     try {
         const {firebaseUID} = req.params;
+        console.log('Received firebase UID: ',firebaseUID)
+
         const user = await User.findOne({firebaseUID})
 
         if (!user) {
