@@ -4,8 +4,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from './firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { refreshToken } from './authUtil';
 
-
+//Screens
 import Login from './screens/Login';
 import Register from './screens/Register';
 import History from './screens/secure/History';
@@ -47,15 +49,30 @@ export default function App() {
         try {
           const token = await user.getIdToken();
           console.log("User token:", token);
+          // Store token securely
+          await AsyncStorage.setItem('idToken', token);
           setToken(token);
         } catch (error) {
           console.error("Failed to get token:", error);
         }
       } else {
         setToken('');
+        await AsyncStorage.removeItem('idToken'); 
       }
     });
     return unsubscribe;
+  }, []);
+
+  
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshToken()
+        .then(token => console.log('Token refreshed:', token))
+        .catch(error => console.error('Failed to refresh token:', error));
+    }, 45 * 60 * 1000); // Every 45 minutes
+  
+    return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
 
   

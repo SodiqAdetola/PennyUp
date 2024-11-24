@@ -1,25 +1,32 @@
 const mongoose = require("mongoose");
+const { type } = require("os");
 
 const User = new mongoose.Schema({
 
-    username: { 
+    firebaseUID: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    username: {
         type: String,
         required: true
     },
 
-    email: { 
-        type: String,
-        required: true
+    accountBalance: {
+        type: Number,
+        default: 1000.00
     },
 
-    password: { 
-        type: String,
-        required: true
+    broughtTrades: {
+        type: Array,
+        default: []
     },
 
-    firebaseToken: { 
-        type: String,
-        required: true
+    soldTrades: {
+        type: Array,
+        default: []
     }
 })
 

@@ -1,5 +1,5 @@
 
-const admin = require('./server');
+const admin = require('../server');
 
 const verifyToken = async (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');

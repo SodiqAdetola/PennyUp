@@ -3,6 +3,10 @@ import React, { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../firebaseConfig'
 
+import axios from 'axios';
+const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com/'
+
+
 const Register = ( { navigation } ) => {
 
   const [username, setUserName] = useState('')
@@ -25,9 +29,15 @@ const Register = ( { navigation } ) => {
     try {
         const response = await createUserWithEmailAndPassword(auth, email, confirmPassword);
         const user = response.user;
+        const firebaseUID = user.uid;
 
-        console.log(response)
-        console.log('user registered')
+        console.log(response,'user registered')
+
+        //Create new user in backend
+        const backendUser = await axios.post(`${backendURL}/users`, {
+            firebaseUID,
+            username
+        })
 
       } catch(error) {
         alert('Sign up failed: ' + error.message)

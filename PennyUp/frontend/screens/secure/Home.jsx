@@ -3,7 +3,12 @@ import React, {useEffect, useState, useRef} from 'react'
 import { signOut } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
 
-const Home = ({ token }) => {
+import axios from 'axios';
+const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com/'
+
+const Home = () => {
+
+  const [username, setUsername] = useState(null);
 
 
     const LogoutHandler = async () => {
@@ -16,10 +21,28 @@ const Home = ({ token }) => {
         }
     }
 
+    const getUsername = async () => {
+      const user = FIREBASE_AUTH.currentUser;
+      if (user) {
+        const firebaseUID = user.uid;
+      }
+
+      try {
+        const response = await axios.get(`${backendURL}users/${firebaseUID}`)
+        console.log('User data: ', response.data)
+        setUsername(response.data.username)
+
+      } catch (error) {
+        console.error('Error fetching user data: ',error);
+      }
+    }
+
+
+
   return (
     <View>
             <Button title='Logout' onPress={LogoutHandler}/>
-            <Text>Welcome</Text>
+            <Text>Welcome {username}</Text>
     </View>
   )
 }   

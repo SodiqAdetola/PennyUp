@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FIREBASE_AUTH } from '../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
+
 const Login = ( { navigation } ) => {
 
 
@@ -16,6 +17,7 @@ const Login = ( { navigation } ) => {
             const response = await signInWithEmailAndPassword(auth, email, password);
             console.log(response);
             console.log('User signed in')
+            
 
         } catch (error) {
             console.log(error);

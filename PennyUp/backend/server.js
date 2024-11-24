@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+const userRoutes = require('./routes/userRoutes')
+
 
 dotenv.config();
 
 const app = express()
+
 app.use(cors())
 app.use(express.json())
 
@@ -17,8 +20,8 @@ mongoose.connect(process.env.MONGODB_URI)
     .catch(error => console.log(error))
 
 
-var admin = require("firebase-admin");
-var serviceAccount = require("process.env.FIREBASE_CREDENTIALS");
+var admin = require('firebase-admin');
+var serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
@@ -26,8 +29,11 @@ admin.initializeApp({
 
 //Test
 app.get('/', (req, res) => {
-  res.send(`hello world`)
+  res.send(`You have reached PennyUp Backend!`)
 });
+
+app.use('/users', userRoutes)
+
 
 
 const PORT = process.env.PORT || 8080;
