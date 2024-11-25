@@ -2,6 +2,7 @@ import { Alert, StyleSheet, Text, View, TouchableOpacity, Button, ScrollView, Sa
 import React, {useEffect, useState, useRef} from 'react'
 import { signOut } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import axios from 'axios';
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com'
@@ -60,10 +61,11 @@ const Home = () => {
     <SafeAreaView style={[styles.container,]}>
 
       <View style={[styles.topContainer]}>
-        <View style={[styles.logoutContainer,]}>
-          <View style={[styles.logoutButton,]}>
-          <Button title='Logout' onPress={LogoutHandler}/>
-          </View>  
+  
+      <View style={styles.logoutContainer}>
+          <TouchableOpacity style={styles.logoutButton} onPress={LogoutHandler}>
+          <AntDesign name="logout" size={35} color="white" />
+          </TouchableOpacity>
         </View>
 
         <View style={[styles.welcomeContainer]}>
@@ -76,6 +78,8 @@ const Home = () => {
       </View>
 
     </SafeAreaView>
+
+    
 
   )
 }   
@@ -106,10 +110,10 @@ const styles = StyleSheet.create({
   },
   
   logoutButton: {
-    backgroundColor: 'white',
+
     borderRadius: 5,
-    right: 10,
-    top: 10,
+    top: 20,
+    right: 20,
   },
 
   welcomeText: {
