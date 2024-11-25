@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from './firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { refreshToken } from './authUtil';
+//Icons
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 //Screens
 import Login from './screens/Login';
@@ -20,15 +23,23 @@ import Trades from './screens/secure/Trades';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function SecureTabs({ route }) {
-  const { token } = route.params
+function SecureTabs() {
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false}}>
-      <Tab.Screen name="Home" component={Home}/>
-      <Tab.Screen name="Trades" component={Trades}/>
-      <Tab.Screen name="History" component={History}/>
-      <Tab.Screen name="Leaderboard" component={Leaderboard}/>
+    <Tab.Navigator 
+    screenOptions={{ 
+      headerShown: false, 
+      tabBarShowLabel: true, 
+      tabBarInactiveTintColor: '#0B2038',
+      tabBarStyle: {
+        height: 75,
+      }
+      }}
+      >
+      <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: () => (<AntDesign name="home" size={30} color="#0B2038" /> ) }}/>
+      <Tab.Screen name="Trades" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-pound" size={30} color="#0B2038" />) }}/>
+      <Tab.Screen name="History" component={History} options={{ tabBarIcon: () => (<MaterialIcons name="history" size={30} color="#0B2038" />) }}/>
+      <Tab.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: () => (<MaterialIcons name="leaderboard" size={30} color="#0B2038" />) }}/>
     </Tab.Navigator>
 
   );
@@ -101,4 +112,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
 });

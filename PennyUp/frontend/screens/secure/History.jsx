@@ -4,9 +4,9 @@ import React from 'react'
 
 const History = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.container,]}>
 
-      <Text>History</Text>
+      <Text style={[styles.white, ]}>History</Text>
 
     </SafeAreaView>
   )
@@ -14,4 +14,19 @@ const History = () => {
 
 export default History
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+  container: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    backgroundColor: '#0B2038',
+    alignItems: 'center',
+  },
+
+  white: {
+    color: 'white',
+  },
+
+})
