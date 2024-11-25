@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Button, ScrollView, SafeAreaView} from 'react-native'
 import React, {useEffect, useState, useRef} from 'react'
 import { signOut } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
@@ -57,20 +57,69 @@ const Home = () => {
 
 
   return (
-    <View>
-      <View>
-        <Button title='Logout' onPress={LogoutHandler}/>   
+    <SafeAreaView style={[styles.container,]}>
+
+      <View style={[styles.topContainer]}>
+        <View style={[styles.logoutContainer,]}>
+          <View style={[styles.logoutButton,]}>
+          <Button title='Logout' onPress={LogoutHandler}/>
+          </View>  
+        </View>
+
+        <View style={[styles.welcomeContainer]}>
+          <Text style={[styles.welcomeText]} >Welcome {username}!</Text>
+        </View>
       </View>
 
-      <View>
-        <Text>Welcome {username || 'User'}</Text>
+      <View Style={[styles.bottomContainer]}>
+
       </View>
-    </View>
+
+    </SafeAreaView>
+
   )
 }   
 
 export default Home
 
 const styles = StyleSheet.create({
+
+  container: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    backgroundColor: '#0B2038',
+    alignItems: 'center'
+  },
+
+  topContainer: {
+    height: '25%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    
+  },
+
+  logoutContainer: {
+    alignItems: 'flex-end',
+  },
+  
+  logoutButton: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    right: 10,
+    top: 10,
+  },
+
+  welcomeText: {
+    font: 'inter',
+    fontSize: '45',
+    fontWeight: '100',
+    textAlign: 'center',
+    color: 'white',
+  },
+
+
   
 })

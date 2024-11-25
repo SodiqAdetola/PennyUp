@@ -24,8 +24,8 @@ function SecureTabs({ route }) {
   const { token } = route.params
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} screenOptions={{ headerShown: false}}/>
+    <Tab.Navigator screenOptions={{ headerShown: false}}>
+      <Tab.Screen name="Home" component={Home}/>
       <Tab.Screen name="Trades" component={Trades}/>
       <Tab.Screen name="History" component={History}/>
       <Tab.Screen name="Leaderboard" component={Leaderboard}/>
