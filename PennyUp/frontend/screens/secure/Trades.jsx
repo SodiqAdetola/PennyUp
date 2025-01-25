@@ -54,9 +54,6 @@ const Trades = () => {
     socket.on('stockUpdates', (data) => {
       setStocks(data); // Update the stock list
     });
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
 
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
   },
 
   stockName: {
-    fontSize: 20,
+    fontSize: 17,
 
   }
 });
