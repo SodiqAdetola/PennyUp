@@ -16,7 +16,7 @@ const User = new mongoose.Schema({
 
     accountBalance: {
         type: Number,
-        default: 1000.00
+        default: 5000.00
     },
 
     broughtTrades: {

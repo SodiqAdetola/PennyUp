@@ -11,7 +11,8 @@
         "express": "^4.21.1",
         "firebase-admin": "^13.0.0",
         "mongoose": "^8.8.1",
-        "socket.io": "^4.8.1"
+        "socket.io": "^4.8.1",
+        "yahoo-finance2": "^2.13.3"
     },
     "engines": {
         "node": ">=14.0.0"
