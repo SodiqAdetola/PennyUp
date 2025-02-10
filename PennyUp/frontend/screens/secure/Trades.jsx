@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Alert } from 'react-native';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
+import StockItem from './components/StockItem';
+import BuyModal from './components/BuyModal';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 const socket = io(backendURL);
@@ -15,6 +17,9 @@ const Trades = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [socketError, setSocketError] = useState(null);
+  const [expandedStocks, setExpandedStocks] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
 
   const getBalance = async () => {
     const auth = getAuth();
@@ -39,18 +44,15 @@ const Trades = () => {
     setIsLoading(true);
     setSocketError(null);
 
-    // Initialize stock symbols in frontend
     const stockSymbols = [
       'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'SPY',
       'AMGN', 'NFLX', 'BA', 'DIS', 'INTC', 'V', 'WMT',
       'BTC-USD', 'ETH-USD', 'BNB-USD', 'XRP-USD', 'DOGE-USD',
     ];
 
-    // fetch stocks using stock symbol
     socket.emit('fetchStocks', stockSymbols);
 
     const handleStockUpdates = (data) => {
-      // Validate data before setting
       const validStocks = data.filter(stock =>
         stock &&
         stock.longName &&
@@ -90,19 +92,44 @@ const Trades = () => {
     setFilteredStocks(filtered);
   }, [searchQuery, stocks]);
 
+  const toggleExpandStock = (symbol) => {
+    setExpandedStocks((prev) =>
+      prev.includes(symbol) ? prev.filter((item) => item !== symbol) : [...prev, symbol]
+    );
+  };
+
+  const handleBuyPress = (stock) => {
+    setSelectedStock(stock);
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmPurchase = (amount) => {
+    if (amount > balance) {
+      Alert.alert('Insufficient Balance', 'You do not have enough funds to complete this purchase.');
+      return;
+    }
+
+    // Logic to handle the purchase
+    console.log(`Buying ${amount} of ${selectedStock.longName}`);
+    setBalance((prev) => prev - amount);
+    setIsModalVisible(false);
+    Alert.alert('Success', `You have purchased $${amount} worth of ${selectedStock.longName}`);
+  };
+
   const renderStockItem = ({ item }) => (
-    <View style={styles.stockItem}>
-      <Text style={[styles.white, styles.stockName]}>{item.longName}</Text>
-      <Text style={styles.white}>Price: ${item.regularMarketPrice}</Text>
-      <Text style={styles.white}>Market Cap: ${item.marketCap}</Text>
-    </View>
+    <StockItem
+      stock={item}
+      isExpanded={expandedStocks.includes(item.symbol)}
+      toggleExpand={() => toggleExpandStock(item.symbol)}
+      handleBuyPress={handleBuyPress}
+    />
   );
 
   const renderContent = () => {
     if (isLoading) {
       return <ActivityIndicator size="large" color="white" style={styles.loader} />;
     }
-
+    
     if (socketError) {
       return <Text style={styles.errorText}>{socketError}</Text>;
     }
@@ -112,9 +139,7 @@ const Trades = () => {
         data={filteredStocks}
         renderItem={renderStockItem}
         keyExtractor={(item) => item.symbol}
-        ListEmptyComponent={
-          <Text style={styles.white}>No stocks found</Text>
-        }
+        ListEmptyComponent={<Text style={styles.white}>No stocks found</Text>}
       />
     );
   };
@@ -122,13 +147,11 @@ const Trades = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Live Stock Prices</Text>
-
       <View style={styles.balanceContainer}>
         <Text style={[styles.balance, styles.white]}>
           {error ? error : `$${balance !== null ? balance.toFixed(2) : 'Loading...'}`}
         </Text>
       </View>
-
       <TextInput
         style={styles.searchBar}
         placeholder="Search stocks..."
@@ -136,10 +159,14 @@ const Trades = () => {
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
+      <View style={styles.stocksContainer}>{renderContent()}</View>
 
-      <View style={styles.stocksContainer}>
-        {renderContent()}
-      </View>
+      <BuyModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onConfirm={handleConfirmPurchase}
+        stock={selectedStock}
+      />
     </SafeAreaView>
   );
 };
@@ -181,8 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   balance: {
-    font: 'inter',
-    fontSize: '65',
+    fontSize: 65,
     fontWeight: '100',
     textAlign: 'center',
     color: 'white',
@@ -195,6 +221,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     marginBottom: 20,
+    borderWidth:0.5,
     borderColor: 'white',
   },
   loader: {
@@ -207,4 +234,48 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  toggleButton: {
+    alignSelf: 'center',
+    marginTop: 10,
+  },
+  chartContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#1C3A5B',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  modalInput: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  buyButton: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#4CAF50',
+    borderRadius: 5,
+  }
 });

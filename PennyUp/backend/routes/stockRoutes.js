@@ -1,8 +1,10 @@
 const express = require('express');
-const { getStocks } = require('../controllers/stockController');
+const { getStocks, buyStock } = require('../controllers/stockController');
 
 const router = express.Router();
 
 router.get('/fetch', getStocks);
+
+router.post('/buy', buyStock)
 
 module.exports = router;
