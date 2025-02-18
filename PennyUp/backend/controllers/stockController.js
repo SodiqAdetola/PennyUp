@@ -18,6 +18,11 @@ exports.getStocks = async (req, res) => {
 exports.buyStock = async (req, res) => {
   const { firebaseUID, stockSymbol, stockName, amount, purchasePrice } = req.body;
 
+  const user = await User.findOne({ firebaseUID });
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  
   try {
     const newTrade = new Trade({
       userId: user._id,
@@ -29,11 +34,6 @@ exports.buyStock = async (req, res) => {
 
     await newTrade.save();
 
-    const user = await User.findOne({ firebaseUID });
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    
     const cost = amount;
     if (user.accountBalance < cost) {
       return res.status(400).json({ error: "Insufficient balance" });
@@ -46,7 +46,7 @@ exports.buyStock = async (req, res) => {
     res.status(200).json({ message: "Trade completed successfully", trade: newTrade, balance: user.accountBalance });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error", error });
   }
 }
 

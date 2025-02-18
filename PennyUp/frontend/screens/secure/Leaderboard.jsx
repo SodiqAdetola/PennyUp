@@ -5,7 +5,7 @@ const Leaderboard = () => {
   return (
     <SafeAreaView style={[styles.container,]}>
 
-      <Text style={[styles.white, ]}>Leaderboard</Text>
+      <Text style={[styles.white, styles.header ]}>Leaderboard</Text>
       
     </SafeAreaView>
   )
@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
 
   white: {
     color: 'white',
+  },
+  
+  header: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 
 

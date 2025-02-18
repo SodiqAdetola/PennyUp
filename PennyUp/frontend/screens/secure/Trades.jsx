@@ -130,6 +130,7 @@ const Trades = () => {
         setBalance(response.data.balance); // Update balance after successful purchase
         setIsModalVisible(false);
         Alert.alert('Success', `You have purchased $${amount} worth of ${selectedStock.longName}`);
+        
       }
     } catch (error) {
       console.error('Purchase error:', error.response?.data || error.message);

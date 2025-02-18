@@ -26,10 +26,14 @@ const Trade = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-    broughtState: {
-      type: Boolean,
-      default: true,
-    }
+  broughtState: {
+    type: Boolean,
+    default: true,
+  },
+  profit: {
+    type: Number,
+    required: false,
+  }
 });
 
 module.exports = mongoose.model("Trade", Trade);
