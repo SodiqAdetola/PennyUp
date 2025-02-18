@@ -8,7 +8,7 @@ const StockChart = ({ history }) => {
       <LineChart
         data={{
           labels: history.map((entry, index) =>
-            index % 12 === 0 ? new Date(entry.date).toLocaleDateString('en-UK', { 
+            index % 7 === 0 ? new Date(entry.date).toLocaleDateString('en-UK', { 
               year: 'numeric', 
               month: 'short' 
             }) : ''

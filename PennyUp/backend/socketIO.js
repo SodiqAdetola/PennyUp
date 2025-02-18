@@ -19,7 +19,7 @@ function initialiseSocketIO(server) {
             try {
               const quote = await yahooFinance.quote(symbol);
               const history = await yahooFinance.historical(symbol, {
-                period1: '2024-01-30',
+                period1: '2024-06-30',
                 interval: '1wk',
               });
 

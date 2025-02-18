@@ -103,17 +103,38 @@ const Trades = () => {
     setIsModalVisible(true);
   };
 
-  const handleConfirmPurchase = (amount) => {
+  const handleConfirmPurchase = async (amount) => {
     if (amount > balance) {
       Alert.alert('Insufficient Balance', 'You do not have enough funds to complete this purchase.');
       return;
     }
 
-    // Logic to handle the purchase
-    console.log(`Buying ${amount} of ${selectedStock.longName}`);
-    setBalance((prev) => prev - amount);
-    setIsModalVisible(false);
-    Alert.alert('Success', `You have purchased $${amount} worth of ${selectedStock.longName}`);
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      Alert.alert('Authentication Error', 'Please log in again.');
+      return;
+    }
+
+    try {
+      const purchasePrice = selectedStock.regularMarketPrice;
+      const response = await axios.post(`${backendURL}/stocks/buy`, {
+        firebaseUID: user.uid,
+        stockSymbol: selectedStock.symbol,
+        stockName: selectedStock.longName,
+        amount,
+        purchasePrice,
+      });
+      if (response.status === 200) {
+        setBalance(response.data.balance); // Update balance after successful purchase
+        setIsModalVisible(false);
+        Alert.alert('Success', `You have purchased $${amount} worth of ${selectedStock.longName}`);
+      }
+    } catch (error) {
+      console.error('Purchase error:', error.response?.data || error.message);
+      Alert.alert('Error', error.response?.data.error || 'Something went wrong.');
+    }
   };
 
   const renderStockItem = ({ item }) => (
@@ -194,18 +215,8 @@ const styles = StyleSheet.create({
     width: '95%',
     height: '70%',
   },
-  stockItem: {
-    backgroundColor: '#1C3A5B',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 10,
-    width: '100%',
-  },
   white: {
     color: 'white',
-  },
-  stockName: {
-    fontSize: 17,
   },
   balance: {
     fontSize: 65,
@@ -234,48 +245,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
-  toggleButton: {
-    alignSelf: 'center',
-    marginTop: 10,
-  },
-  chartContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#1C3A5B',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-  },
-  modalText: {
-    color: 'white',
-    fontSize: 18,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  modalInput: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  buyButton: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: '#4CAF50',
-    borderRadius: 5,
-  }
 });

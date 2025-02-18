@@ -26,6 +26,10 @@ const Trade = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+    broughtState: {
+      type: Boolean,
+      default: true,
+    }
 });
 
 module.exports = mongoose.model("Trade", Trade);

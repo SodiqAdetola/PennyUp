@@ -35,10 +35,31 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress }) => {
 export default StockItem;
 
 const styles = StyleSheet.create({
-  stockItem: { backgroundColor: '#1C3A5B', padding: 10, marginBottom: 10, borderRadius: 10 },
-  white: { color: 'white' },
-  stockName: { fontSize: 17 },
-  toggleButton: { alignSelf: 'center', marginTop: 10 },
-  buyButton: { marginTop: 10, padding: 10, backgroundColor: '#4CAF50', borderRadius: 5 },
-  buyText: { color: 'white', textAlign: 'center' },
+  stockItem: { 
+    backgroundColor: '#1C3A5B', 
+    padding: 10, marginBottom: 10, 
+    borderRadius: 10 
+},
+  white: { 
+    color: 'white' 
+},
+  stockName: { 
+    fontSize: 17 
+},
+  toggleButton: { 
+    alignSelf: 'center', 
+    marginTop: 10 
+},
+  buyButton: {
+    alignSelf: 'center',
+    width: '100%',
+    margin: 20, 
+    padding: 10, 
+    backgroundColor: '#4CAF50', 
+    borderRadius: 5 
+},
+  buyText: { 
+    color: 'white', 
+    textAlign: 'center' 
+},
 });

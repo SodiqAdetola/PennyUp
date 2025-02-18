@@ -19,15 +19,15 @@ const User = new mongoose.Schema({
         default: 1000.00
     },
 
-    broughtTrades: {
-        type: Array,
-        default: []
-    },
+    broughtTrades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Trade',
+    }],
 
-    soldTrades: {
-        type: Array,
-        default: []
-    }
+    soldTrades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Trade',
+    }]
 })
 
 module.exports = mongoose.model('User', User)
