@@ -18,12 +18,13 @@ const Login = ( { navigation } ) => {
             console.log(response);
             console.log('User signed in')
             
-
         } catch (error) {
             console.log(error);
             alert('Sign in failed: ' + error.message)
         }
-    }
+
+    }    
+
 
 
   return (

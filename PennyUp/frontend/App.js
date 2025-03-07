@@ -13,10 +13,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 //Screens
 import Login from './screens/Login';
 import Register from './screens/Register';
-import History from './screens/secure/History';
 import Home from './screens/secure/Home';
 import Leaderboard from './screens/secure/Leaderboard';
 import Trades from './screens/secure/Trades';
+import navHistory from './screens/secure/components/navHistory';
 
 
 
@@ -38,7 +38,7 @@ function SecureTabs() {
       >
       <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: () => (<AntDesign name="home" size={30} color="#0B2038" /> ) }}/>
       <Tab.Screen name="Trades" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-pound" size={30} color="#0B2038" />) }}/>
-      <Tab.Screen name="History" component={History} options={{ tabBarIcon: () => (<MaterialIcons name="history" size={30} color="#0B2038" />) }}/>
+      <Tab.Screen name="History" component={navHistory} options={{ tabBarIcon: () => (<MaterialIcons name="history" size={30} color="#0B2038" />) }}/>
       <Tab.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: () => (<MaterialIcons name="leaderboard" size={30} color="#0B2038" />) }}/>
     </Tab.Navigator>
 

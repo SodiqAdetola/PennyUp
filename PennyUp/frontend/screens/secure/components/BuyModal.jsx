@@ -26,6 +26,7 @@ const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
           />
           <View style={styles.buttonRow}>
             <Button title="Cancel" onPress={onClose} />
+            <View style={styles.verticalLine}></View>
             <Button title="Confirm" onPress={handleConfirm} />
           </View>
         </View>
@@ -65,5 +66,12 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    
+  },
+  verticalLine: {
+    alignSelf: "center",
+    height: "75%",
+    width: 1,
+    backgroundColor: "white",
   },
 });

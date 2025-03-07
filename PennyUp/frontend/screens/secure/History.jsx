@@ -7,7 +7,7 @@ import HistoryItem from './components/HistoryItem';  // Import the new HistoryIt
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
 
-const History = () => {
+const History = ( {navigation} ) => {
   const [broughtTrades, setBroughtTrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,7 +45,7 @@ const History = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       getBroughtTrades(); 
-    }, 3000); 
+    }, 5000); 
   
 
     return () => clearInterval(interval);
@@ -54,6 +54,11 @@ const History = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Trade History</Text>
+
+            <View style={styles.navContainer}>
+              <Text onPress={() => {}} style={styles.broughtHeader}>Active Trades</Text>
+              <Text onPress={() => navigation.push('Sold')} style={styles.soldHeader}>Sold Trades</Text>
+            </View>
 
       {isLoading ? (
         <ActivityIndicator size="large" color="white" />
@@ -104,4 +109,24 @@ const styles = StyleSheet.create({
     marginTop: 80,
     textAlign: 'center',
   },
+  navContainer: {
+    marginTop: '50',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#1C3A5B',
+    width: '100%',
+    padding: 10,
+  },
+  soldHeader: {
+    color: 'white',
+    fontSize: 16,
+},
+broughtHeader: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+
+}
+  
 });
