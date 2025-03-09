@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import HistoryItem from './components/HistoryItem';  // Import the new HistoryItem component
+import SellModal from './components/SellModal';  // Import the new SellModal component
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
@@ -11,6 +12,9 @@ const History = ( {navigation} ) => {
   const [broughtTrades, setBroughtTrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
+
 
   const getBroughtTrades = async () => {
     try {
@@ -41,15 +45,24 @@ const History = ( {navigation} ) => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     const interval = setInterval(() => {
       getBroughtTrades(); 
-    }, 5000); 
+    }); 
   
 
     return () => clearInterval(interval);
   }, []);
+
+
+  const handleSellPress = (stock) => {
+    setSelectedStock(stock);
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmSell = () => {
+    setIsModalVisible(false);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -70,11 +83,17 @@ const History = ( {navigation} ) => {
         <View style={[styles.stocksContainer]}>
         <FlatList
           data={broughtTrades}
-          renderItem={({ item }) => <HistoryItem trade={item} />}
+          renderItem={({ item }) => <HistoryItem trade={item} handleSellPress={handleSellPress}/>}
           keyExtractor={(item) => item._id}
         />
         </View>
       )}
+      <SellModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        stock={selectedStock}
+        onConfirm={handleConfirmSell}
+      />
     </SafeAreaView>
   );
 };
@@ -89,8 +108,9 @@ const styles = StyleSheet.create({
   },
   stocksContainer: {
     marginTop: '50',
+    marginBottom: '0',
     width: '95%',
-    height: '90%',
+    height: '80%',
   },
   header: {
     color: 'white',

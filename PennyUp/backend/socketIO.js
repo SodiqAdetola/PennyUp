@@ -13,6 +13,7 @@ function initialiseSocketIO(server) {
     console.log('A user connected');
 
     socket.on('fetchStocks', async (symbols) => {
+      
       const fetchStockData = async (symbols) => {
         try {
           const stockDataPromises = symbols.map(async (symbol) => {

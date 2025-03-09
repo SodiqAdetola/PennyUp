@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const HistoryItem = ({ trade, handleSellPress }) => {
+const HistoryItem = ({ stock, trade, handleSellPress }) => {
   return (
     <View style={styles.stockItem}>
       <Text style={[styles.white, styles.stockName]}>{trade.stockName}</Text>
@@ -13,7 +13,7 @@ const HistoryItem = ({ trade, handleSellPress }) => {
       
       <View style={styles.stockDetails}>
 
-        <TouchableOpacity style={styles.sellButton} >
+        <TouchableOpacity style={styles.sellButton} onPress={() => handleSellPress(stock)}>
             <Text style={styles.sellText}>Sell</Text>
         </TouchableOpacity>
         

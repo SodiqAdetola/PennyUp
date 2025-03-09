@@ -1,29 +1,20 @@
 import React, { useState } from "react";
 import { Modal, View, Text, TextInput, Button, StyleSheet } from "react-native";
 
-const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
-  const [amount, setAmount] = useState("");
+const SellModal = ({ visible, onClose, onConfirm, stock }) => {
 
   const handleConfirm = () => {
-    const investmentAmount = parseFloat(amount);
-    if (investmentAmount > 0) {
-      onConfirm(investmentAmount);
-    }
+
+    onConfirm();
+    
   };
 
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalHeader}>Buy {stock?.longName}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter amount in $"
-            placeholderTextColor="#888"
-            keyboardType="numeric"
-            value={amount}
-            onChangeText={setAmount}
-          />
+          <Text style={styles.modalHeader}>Sell {stock?.longName}</Text>
+
           <View style={styles.buttonRow}>
             <Button title="Cancel" onPress={onClose} />
             <View style={styles.verticalLine}></View>
@@ -35,7 +26,7 @@ const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
   );
 };
 
-export default BuyModal;
+export default SellModal;
 
 const styles = StyleSheet.create({
   modalOverlay: {
@@ -70,7 +61,7 @@ const styles = StyleSheet.create({
   },
   verticalLine: {
     alignSelf: "center",
-    height: "50%",
+    height: "75%",
     width: 1,
     backgroundColor: "white",
   },

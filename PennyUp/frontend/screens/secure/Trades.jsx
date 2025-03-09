@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   balance: {
-    fontSize: 65,
+    fontSize: 50,
     fontWeight: '100',
     textAlign: 'center',
     color: 'white',
