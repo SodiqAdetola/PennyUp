@@ -19,7 +19,7 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
       </View>
 
       <Text style={styles.white}>Price: ${Number(stock.regularMarketPrice).toFixed(2)}</Text>
-      <Text style={styles.white}>Market Cap: ${stock.marketCap}</Text>
+      <Text style={styles.white}>Market Cap: ${Number(stock.marketCap).toLocaleString()}</Text>
 
       {isExpanded && stock.history && (
         <View style={styles.chartContainer}>

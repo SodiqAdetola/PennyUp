@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, SafeAreaView, FlatList, ActivityIndicator } fro
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
-import { io } from 'socket.io-client'; 
 import HistoryItem from './components/HistoryItem';
 import SellModal from './components/SellModal';
+import SocketService from './services/SocketService';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
@@ -14,7 +14,6 @@ const History = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
-  const [socket, setSocket] = useState(null);
 
   const getBroughtTrades = async () => {
     try {
@@ -25,31 +24,20 @@ const History = ({ navigation }) => {
         setIsLoading(false);
         return;
       }
-      const firebaseUID = user.uid;
-      const userData = await axios.get(`${backendURL}/users/${firebaseUID}`);
-
+      
+      const userData = await axios.get(`${backendURL}/users/${user.uid}`);
       const stockIDs = userData.data.broughtTrades || [];
 
       if (stockIDs.length > 0) {
         const response = await axios.post(`${backendURL}/stocks/stock`, { stockIDs });
         
-        // Save current prices from existing trades if available
-        const currentPriceMap = {};
-        broughtTrades.forEach(trade => {
-          if (trade._id && trade.currentPrice) {
-            currentPriceMap[trade._id] = trade.currentPrice;
-          }
-        });
-        
-        // Apply saved prices to new trade data
+        // Apply current prices from socket service
         const updatedTrades = response.data.map(trade => {
-          if (currentPriceMap[trade._id]) {
-            return {
-              ...trade,
-              currentPrice: currentPriceMap[trade._id]
-            };
-          }
-          return trade;
+          const currentPrice = SocketService.getStockPrice(trade.stockSymbol);
+          return {
+            ...trade,
+            currentPrice: currentPrice !== undefined ? currentPrice : trade.currentPrice
+          };
         });
         
         setBroughtTrades(updatedTrades);
@@ -65,97 +53,65 @@ const History = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      getBroughtTrades();
-    };
-
-    fetchData();
-    const unsubscribe = navigation.addListener('focus', fetchData);
+    getBroughtTrades();
+    const unsubscribe = navigation.addListener('focus', getBroughtTrades);
     return unsubscribe;
   }, [navigation]);
 
-  // Set up socket connection
+  // Listen for stock updates using the shared service
   useEffect(() => {
-    const newSocket = io(backendURL);
-    setSocket(newSocket);
+    if (broughtTrades.length === 0) return;
     
-    return () => {
-      if (newSocket) {
-        newSocket.disconnect();
-      }
-    };
-  }, []);
-
-  // Listen for stock updates and update prices
-  useEffect(() => {
-    if (!socket || broughtTrades.length === 0) return;
-    
-    // Extract unique stock symbols from broughtTrades
+    // Request updates for our owned stocks
     const stockSymbols = [...new Set(broughtTrades.map(trade => trade.stockSymbol))];
+    SocketService.fetchStocks(stockSymbols);
     
-    // Emit event to fetch these specific stocks
-    socket.emit('fetchStocks', stockSymbols);
-    
-    const handleStockUpdates = (data) => {
-      if (!data || data.length === 0) return;
-      
-      // Update brought trades with current prices
+    // Set up listener for price updates
+    const removeListener = SocketService.addListener(() => {
+      // Update trades with latest prices from the shared cache
       setBroughtTrades(prevTrades => 
         prevTrades.map(trade => {
-          const stockUpdate = data.find(stock => stock.symbol === trade.stockSymbol);
-          if (stockUpdate && stockUpdate.regularMarketPrice !== undefined) {
+          const currentPrice = SocketService.getStockPrice(trade.stockSymbol);
+          if (currentPrice !== undefined) {
             return {
               ...trade,
-              currentPrice: stockUpdate.regularMarketPrice
+              currentPrice
             };
           }
-          console.log(trade);
           return trade;
         })
       );
-    };
+    });
     
-    socket.on('stockUpdates', handleStockUpdates);
-    
-    return () => {
-      socket.off('stockUpdates', handleStockUpdates);
-    };
-  }, [socket, broughtTrades.length]);
+    return () => removeListener();
+  }, [broughtTrades.length]);
 
   // Update prices in database when they change
   useEffect(() => {
-    // Function to update prices in the database
+    if (!broughtTrades.length) return;
+    
     const updatePricesInDatabase = async () => {
-      if (!broughtTrades.length) return;
-      
       try {
         const auth = getAuth();
         const user = auth.currentUser;
-        
         if (!user) return;
         
-        // Map trades to just the data we need for the update
         const updatedTrades = broughtTrades.map(trade => ({
           tradeId: trade._id,
           currentPrice: trade.currentPrice
         }));
         
-        // Call your backend to update prices in the database
         await axios.put(`${backendURL}/stocks/updatePrices`, {
           firebaseUID: user.uid,
           trades: updatedTrades
         });
-        
-        console.log('Successfully updated prices in database');
       } catch (error) {
         console.error('Error updating prices in database:', error);
       }
     };
     
-    // Add debounce to prevent too many API calls
-    // Only update after prices have been stable for 2 seconds
+    // Debounce database updates to prevent excess API calls
     const timer = setTimeout(updatePricesInDatabase, 2000);
-    
     return () => clearTimeout(timer);
   }, [broughtTrades]);
 
@@ -164,16 +120,12 @@ const History = ({ navigation }) => {
       console.error("Error: Attempted to sell a stock, but stock data is missing.");
       return;
     }
-    console.log("Selling Stock:", stock);
     setSelectedStock(stock);
     setIsModalVisible(true);
   };
 
   const handleConfirmSell = async () => {
-    if (!selectedStock) {
-      console.error("Error: Attempted to sell a stock, but stock data is missing.");
-      return;
-    }
+    if (!selectedStock) return;
   
     try {
       const auth = getAuth();
@@ -192,8 +144,7 @@ const History = ({ navigation }) => {
   
       setBroughtTrades(broughtTrades.filter((trade) => trade._id !== selectedStock._id));
       setIsModalVisible(false);
-      // Refresh the trades list
-      getBroughtTrades(); 
+      getBroughtTrades();
     } catch (err) {
       console.error('Error selling stock:', err);
     }
