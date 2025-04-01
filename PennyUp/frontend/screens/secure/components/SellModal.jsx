@@ -1,24 +1,19 @@
-import React, { useState } from "react";
-import { Modal, View, Text, TextInput, Button, StyleSheet } from "react-native";
+import React from 'react';
+import { Modal, Text, View, Button, StyleSheet } from 'react-native';
 
-const SellModal = ({ visible, onClose, onConfirm, stock }) => {
-
-  const handleConfirm = () => {
-
-    onConfirm();
-    
-  };
-
+const SellModal = ({ visible, onClose, stock, onConfirm }) => {
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalHeader}>Sell {stock?.longName}</Text>
-
+          <Text style={styles.modalHeader}>Sell {stock?.stockName || "Stock"}</Text>
+          <Text style={styles.modalText}>Purchase Price: ${stock?.purchasePrice}</Text>
+          <Text style={styles.modalText}>Current Price: ${stock?.currentPrice}</Text>
+          
           <View style={styles.buttonRow}>
             <Button title="Cancel" onPress={onClose} />
             <View style={styles.verticalLine}></View>
-            <Button title="Confirm" onPress={handleConfirm} />
+            <Button title="Confirm" onPress={onConfirm} />
           </View>
         </View>
       </View>
@@ -26,43 +21,40 @@ const SellModal = ({ visible, onClose, onConfirm, stock }) => {
   );
 };
 
-export default SellModal;
-
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
-    width: "80%",
     backgroundColor: "#1C3A5B",
     padding: 20,
     borderRadius: 10,
+    width: '80%',
   },
   modalHeader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 22,
+    fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white',
   },
-  input: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 20,
-    color: "black",
+  modalText: {
+    fontSize: 16,
+    marginVertical: 5,
+    color: 'white',
   },
   buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 20,
   },
   verticalLine: {
-    alignSelf: "center",
-    height: "75%",
     width: 1,
-    backgroundColor: "white",
+    height: 30,
+    backgroundColor: '#ddd',
   },
 });
+
+export default SellModal;

@@ -4,7 +4,7 @@ import { LineChart } from 'react-native-gifted-charts';
 
 const screenWidth = Dimensions.get('window').width;
 
-const StockChart = ({ history }) => {
+const StockChart = ({ history, stock }) => {
   const [selectedPoint, setSelectedPoint] = useState(null);
 
   // Calculate exact min and max prices
@@ -37,7 +37,7 @@ const StockChart = ({ history }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.priceText}>
-          ${history[history.length - 1]?.close.toFixed(2)}
+          ${stock.regularMarketPrice.toFixed(2)}
         </Text>
         <Text style={[styles.changeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
           {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercentage}%)

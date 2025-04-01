@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Alert } from 'react-native';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
+import { useFocusEffect } from '@react-navigation/native';
 import StockItem from './components/StockItem';
 import BuyModal from './components/BuyModal';
 
@@ -20,8 +21,10 @@ const Trades = () => {
   const [expandedStocks, setExpandedStocks] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
+  const [favourites, setFavourites] = useState({});
 
-  const getBalance = async () => {
+
+  const getBalance = useCallback( async () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -37,7 +40,13 @@ const Trades = () => {
       console.error('Error fetching user data:', error);
       setError('Could not fetch balance');
     }
-  };
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getBalance();
+    }, [getBalance])
+  );
 
   useEffect(() => {
     getBalance();
@@ -84,13 +93,61 @@ const Trades = () => {
     };
   }, []);
 
+
+
+
+
+  const handleFavourite = async (stock) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      Alert.alert("Error", "User not authenticated.");
+      return;
+    }
+
+    try {
+        const response = await axios.put(`${backendURL}/users/favouriteStock`, {
+            firebaseUID: user.uid,
+            stockSymbol: stock.symbol,
+        });
+
+        const updatedFavourites = response.data.favouriteStocks;
+        
+        // Update UI by marking favorites based on the response
+        const updatedStocks = stocks.map(s => ({
+            ...s,
+            favourite: updatedFavourites.includes(s.symbol),
+        }));
+
+        setStocks(updatedStocks);
+
+    } catch (error) {
+        Alert.alert("Error", "Could not update favourites.");
+    }
+};
+
+
+
+
+
   useEffect(() => {
     const filtered = stocks.filter(stock =>
       stock.longName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       stock.symbol?.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredStocks(filtered);
+  
+    // Sort: favourites first, then normal stocks
+    const sortedStocks = [...filtered].sort((a, b) => {
+      return (b.favourite === true) - (a.favourite === true);
+    });
+  
+    setFilteredStocks(sortedStocks);
   }, [searchQuery, stocks]);
+  
+
+
+
 
   const toggleExpandStock = (symbol) => {
     setExpandedStocks((prev) =>
@@ -119,12 +176,13 @@ const Trades = () => {
 
     try {
       const purchasePrice = selectedStock.regularMarketPrice;
-      const response = await axios.post(`${backendURL}/stocks/buy`, {
+      const response = await axios.put(`${backendURL}/stocks/buy`, {
         firebaseUID: user.uid,
         stockSymbol: selectedStock.symbol,
         stockName: selectedStock.longName,
         amount,
         purchasePrice,
+        currentPrice: purchasePrice,
       });
       if (response.status === 200) {
         setBalance(response.data.balance); // Update balance after successful purchase
@@ -138,12 +196,14 @@ const Trades = () => {
     }
   };
 
+
   const renderStockItem = ({ item }) => (
     <StockItem
       stock={item}
       isExpanded={expandedStocks.includes(item.symbol)}
       toggleExpand={() => toggleExpandStock(item.symbol)}
       handleBuyPress={handleBuyPress}
+      handleFavourite={handleFavourite}
     />
   );
 
@@ -233,7 +293,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     marginBottom: 20,
-    borderWidth:0.5,
+    borderWidth: 0.5,
     borderColor: 'white',
   },
   loader: {

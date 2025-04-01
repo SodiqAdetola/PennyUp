@@ -22,6 +22,14 @@ const Trade = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  profit: {
+    type: Number,
+    required: false,
+  },
+  currentPrice: {
+    type: Number,
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -33,7 +41,8 @@ const Trade = new mongoose.Schema({
   profit: {
     type: Number,
     required: false,
-  }
+  },
+
 });
 
 module.exports = mongoose.model("Trade", Trade);

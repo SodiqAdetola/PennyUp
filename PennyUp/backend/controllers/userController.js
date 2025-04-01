@@ -1,5 +1,6 @@
 const User = require('../models/User')
 
+
 exports.createUser = async (req, res) => {
     try {
         const { firebaseUID, username } = req.body;
@@ -61,3 +62,29 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({message: 'Server error'});
     }
 }
+
+
+exports.updateFavouriteStock = async (req, res) => {
+    const { firebaseUID, stockSymbol } = req.body;
+
+    try {
+        const user = await User.findOne({ firebaseUID });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        if (user.favouriteStocks.includes(stockSymbol)) {
+            // Stock exists, remove it (Unfavourite)
+            user.favouriteStocks = user.favouriteStocks.filter(symbol => symbol !== stockSymbol);
+        } else {
+            // Stock does not exist, add it (Favourite)
+            user.favouriteStocks.push(stockSymbol);
+        }
+
+        await user.save();
+        return res.json({ favouriteStocks: user.favouriteStocks });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};
+
+

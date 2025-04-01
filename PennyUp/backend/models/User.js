@@ -27,7 +27,10 @@ const User = new mongoose.Schema({
     soldTrades: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Trade',
-    }]
+    }],
+    favouriteStocks: [{
+        type: String
+    }],
 })
 
 module.exports = mongoose.model('User', User)
