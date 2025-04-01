@@ -30,7 +30,7 @@ const HistoryItem = ({ trade, handleSellPress }) => {
       <Text style={styles.white}>Purchase Amount: ${trade.amount}</Text>
       <Text style={styles.white}>Stock Purchase Price: ${Number(trade.purchasePrice).toFixed(2)}</Text>
       <Text style={styles.white}>Stock Current Price: ${Number(trade.currentPrice).toFixed(2)}</Text>
-      <Text style={styles.white}>Date & Time of Purchase: {trade.createdAt}</Text>
+      <Text style={styles.white}>Date & Time of Purchase: {new Date(trade.createdAt).toLocaleString()}</Text>
       
       <View style={styles.stockDetails}>
         <TouchableOpacity style={styles.sellButton} onPress={() => handleSellPress(trade)}>

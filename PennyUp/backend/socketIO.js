@@ -55,7 +55,7 @@ function initialiseSocketIO(server) {
       const interval = setInterval(async () => {
         const updatedData = await fetchStockData(symbols);
         socket.emit('stockUpdates', updatedData);
-      }, 300000); // 5 minutes
+      }, 10000); // 10 seconds
 
       socket.on('disconnect', () => {
         clearInterval(interval);

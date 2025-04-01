@@ -34,6 +34,10 @@ const Trade = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  soldAt: {
+    type: Date,
+    default: Date.now,
+  },
   broughtState: {
     type: Boolean,
     default: true,

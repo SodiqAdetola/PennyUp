@@ -139,7 +139,8 @@ const History = ({ navigation }) => {
         firebaseUID: user.uid,
         tradeId: selectedStock._id,
         personalProfitLoss,
-        initialPurchaseAmount
+        initialPurchaseAmount,
+        soldAt: new Date(),
       });
   
       setBroughtTrades(broughtTrades.filter((trade) => trade._id !== selectedStock._id));

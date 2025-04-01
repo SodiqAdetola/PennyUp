@@ -28,7 +28,9 @@ const SoldHistoryItem = ({ trade }) => {
       <Text style={styles.white}>Purchase Amount: ${trade.amount}</Text>
       <Text style={styles.white}>Purchase Price: ${trade.purchasePrice}</Text>
       <Text style={styles.white}>Sold Price: ${trade.currentPrice}</Text>
-      <Text style={styles.white}>Date & Time of Purchase: {trade.createdAt}</Text>
+      <Text style={styles.white}>Date & Time of Purchase: {new Date(trade.createdAt).toLocaleString()}</Text>
+      <Text style={styles.white}>Date & Time Sold: {new Date(trade.soldAt).toLocaleString()}</Text>
+
       
     </View>
   );

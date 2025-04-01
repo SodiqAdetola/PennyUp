@@ -67,7 +67,7 @@ exports.getUserStocks =  async (req ,res) => {
 
 exports.sellStock = async (req, res) => {
     try {
-        const { firebaseUID, tradeId, personalProfitLoss, initialPurchaseAmount } = req.body;
+        const { firebaseUID, tradeId, personalProfitLoss, initialPurchaseAmount, soldAt } = req.body;
 
         const user = await User.findOne({ firebaseUID });
         if (!user) {
@@ -79,9 +79,10 @@ exports.sellStock = async (req, res) => {
             return res.status(404).json({ message: "Trade not found" });
         }
 
-        // Calculate updated balance and update profit on schema
-        trade.profit = personalProfitLoss;
+        trade.profit = personalProfitLoss; //update profit on schema
+        trade.soldAt = soldAt; // Update the sold date
 
+        // Calculate the updated balance
         const updatedBalance = user.accountBalance + personalProfitLoss + initialPurchaseAmount;
         trade.broughtState = false; // Mark as sold
         
