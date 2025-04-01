@@ -3,13 +3,17 @@ import React, {useEffect, useState, useRef} from 'react'
 import { signOut } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
 import AntDesign from '@expo/vector-icons/AntDesign';
-
 import axios from 'axios';
+
+import LogoutModal from './components/LogoutModal'; 
+
+
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com'
 
 const Home = () => {
 
   const [username, setUsername] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false); 
 
   useEffect ( () => {
     getUsername();
@@ -54,6 +58,17 @@ const Home = () => {
         console.error('Error fetching user data: ', error);
       }
     }
+
+      // Handle logout confirmation
+  const handleLogoutConfirm = () => {
+    setIsModalVisible(false);  
+    LogoutHandler();  
+  };
+
+  // Handle modal close without logging out
+  const handleLogoutCancel = () => {
+    setIsModalVisible(false);  
+  };
     
 
 
@@ -63,7 +78,7 @@ const Home = () => {
       <View style={[styles.topContainer]}>
   
       <View style={styles.logoutContainer}>
-          <TouchableOpacity style={styles.logoutButton} onPress={LogoutHandler}>
+          <TouchableOpacity style={styles.logoutButton} onPress={() => setIsModalVisible(true)}>
           <AntDesign name="logout" size={35} color="white" />
           </TouchableOpacity>
         </View>
@@ -76,6 +91,12 @@ const Home = () => {
       <View Style={[styles.bottomContainer]}>
 
       </View>
+
+      <LogoutModal
+        visible={isModalVisible}
+        onClose={handleLogoutCancel}  // Handle close
+        onConfirm={handleLogoutConfirm}  // Handle confirmation
+      />
 
     </SafeAreaView>
 
@@ -118,7 +139,9 @@ const styles = StyleSheet.create({
 
   welcomeText: {
     font: 'inter',
-    fontSize: '45',
+    fontSize: '40',
+    maxWidth: '80%',
+    alignSelf: 'center',
     fontWeight: '100',
     textAlign: 'center',
     color: 'white',
