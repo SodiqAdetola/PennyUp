@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import StockChart from './StockChart';
 
@@ -9,13 +9,13 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
 
       <View style={styles.headerRow}>
         <Text style={[styles.white, styles.stockName]}>{stock.longName}</Text>
-        <TouchableOpacity onPress={() => handleFavourite(stock)} style={styles.favButton}>
+        <TouchableWithoutFeedback onPress={() => handleFavourite(stock)} style={styles.favButton}>
           <MaterialIcons 
             name={"bookmark"} 
-            size={24} 
+            size={35} 
             color={stock.favourite ? "gold" : "white"} 
           />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       </View>
 
       <Text style={styles.white}>Price: ${Number(stock.regularMarketPrice).toFixed(2)}</Text>
@@ -64,7 +64,10 @@ headerRow: {
 },
   toggleButton: { 
     alignSelf: 'center', 
-    marginTop: 10 
+    marginTop: 10,
+    padding: 10,
+    paddingLeft: 80,
+    paddingRight: 80,
 },
   buyButton: {
     alignSelf: 'center',
@@ -78,4 +81,5 @@ headerRow: {
     color: 'white', 
     textAlign: 'center' 
 },
+
 });

@@ -29,7 +29,8 @@ const User = new mongoose.Schema({
         ref: 'Trade',
     }],
     favouriteStocks: [{
-        type: String
+        type: String,
+        required: false
     }],
 })
 
