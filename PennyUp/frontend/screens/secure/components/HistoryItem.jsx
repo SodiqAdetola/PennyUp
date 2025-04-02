@@ -26,12 +26,30 @@ const HistoryItem = ({ trade, handleSellPress }) => {
       </Text>
       </View>
 
+      <View style={styles.infoContainer}>
 
-      <Text style={styles.white}>Purchase Amount: ${trade.amount}</Text>
-      <Text style={styles.white}>Stock Purchase Price: ${Number(trade.purchasePrice).toFixed(2)}</Text>
-      <Text style={styles.white}>Stock Current Price: ${Number(trade.currentPrice).toFixed(2)}</Text>
-      <Text style={styles.white}>Date & Time of Purchase: {new Date(trade.createdAt).toLocaleString()}</Text>
-      
+        <View style={styles.info}>
+          <Text style={styles.label} >Purchase Amount: </Text>
+          <Text style={styles.white}> ${trade.amount} </Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Stock Purchase Price: </Text>
+          <Text style={styles.white}>${Number(trade.purchasePrice).toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Stock Current Price: </Text>
+          <Text style={styles.white}>${Number(trade.currentPrice).toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Date & Time of Purchase: </Text>
+          <Text style={styles.white}>{new Date(trade.createdAt).toLocaleString()}</Text>
+        </View>
+
+      </View>
+
       <View style={styles.stockDetails}>
         <TouchableOpacity style={styles.sellButton} onPress={() => handleSellPress(trade)}>
             <Text style={styles.sellText}>Sell</Text>
@@ -46,17 +64,14 @@ export default HistoryItem;
 const styles = StyleSheet.create({
   stockItem: { 
     backgroundColor: '#1C3A5B', 
-    padding: 10, 
     marginBottom: 10, 
     borderRadius: 10, 
     width: '100%',
   },
-  white: { 
-    color: 'white' 
-  },
   stockName: { 
     fontSize: 17,
     fontWeight: 'bold',
+    padding: 10,
   },
   profitLoss: { 
     fontSize: 18,
@@ -64,17 +79,13 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     marginVertical: 5,
   },
-  toggleButton: { 
-    alignSelf: 'center', 
-    marginTop: 10 
-  },
   sellButton: {
     alignSelf: 'center',
-    width: '100%',
-    margin: 20, 
+    width: '90%',
     padding: 10, 
     backgroundColor: '#F44336', 
-    borderRadius: 5 
+    borderRadius: 5,
+    marginBottom: 20,
   },
   sellText: { 
     color: 'white', 
@@ -90,5 +101,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5,
+  },
+  info: {
+    flexDirection: 'row',
+    color: '#C5D0DC',
+  },
+  white: { 
+    color: 'white' 
+  },
+  label: { 
+    color: '#8A9AAC', 
+  },
+  infoContainer: {
+    marginBottom: 12,
+    paddingLeft: 16,
+    paddingRight: 16,
+    width: '100%',
   },
 });

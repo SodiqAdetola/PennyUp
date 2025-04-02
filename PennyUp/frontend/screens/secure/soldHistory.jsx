@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import SoldHistoryItem from './components/SoldHistoryItem';
+import ProfitChart from './components/ProfitChart'; 
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
@@ -29,7 +30,11 @@ const SoldHistory = ({ navigation }) => {
 
       if (stockIDs.length > 0) {
         const response = await axios.post(`${backendURL}/stocks/stock`, { stockIDs });
-        setSoldTrades(response.data);
+
+        const sortedTrades = response.data.sort((a, b) => 
+          new Date(b.soldAt) - new Date(a.soldAt)
+        );
+        setSoldTrades(sortedTrades);
       } else {
         setSoldTrades([]);
       }
@@ -67,14 +72,19 @@ const SoldHistory = ({ navigation }) => {
       ) : soldTrades.length === 0 ? (
         <Text style={styles.noTrades}>No sold trades.</Text>
       ) : (
-        <View style={styles.stocksContainer}>
-          <FlatList
-            data={soldTrades}
-            renderItem={({ item }) => (
-              <SoldHistoryItem trade={item} />
-            )}
-            keyExtractor={(item) => item._id}
-          />
+        <View style={styles.contentContainer}>
+          {/* Add the profit chart above the trades list */}
+          <ProfitChart />
+          
+          <View style={styles.stocksContainer}>
+            <FlatList
+              data={soldTrades}
+              renderItem={({ item }) => (
+                <SoldHistoryItem trade={item} />
+              )}
+              keyExtractor={(item) => item._id}
+            />
+          </View>
         </View>
       )}
     </SafeAreaView>
@@ -95,11 +105,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
   },
+  contentContainer: {
+    width: '100%',
+    flex: 1,
+    paddingTop: 10,
+  },
   stocksContainer: {
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 0,
     width: '95%',
-    height: '80%',
+    flex: 1,
+    alignSelf: 'center',
   },
   navContainer: {
     marginTop: 50,

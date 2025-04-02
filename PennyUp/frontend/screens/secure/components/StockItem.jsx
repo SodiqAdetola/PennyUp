@@ -18,8 +18,18 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
         </TouchableWithoutFeedback>
       </View>
 
-      <Text style={styles.white}>Price: ${Number(stock.regularMarketPrice).toFixed(2)}</Text>
-      <Text style={styles.white}>Market Cap: ${Number(stock.marketCap).toLocaleString()}</Text>
+      <View style={styles.infoContainer}>
+
+        <View style={styles.info}>
+        <Text style={styles.label}>Price: </Text>
+        <Text style={styles.white}> ${Number(stock.regularMarketPrice).toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Market Cap: </Text>
+          <Text style={styles.white}> ${Number(stock.marketCap).toLocaleString()}</Text>
+        </View>
+      </View>
 
       {isExpanded && stock.history && (
         <View style={styles.chartContainer}>
@@ -80,6 +90,21 @@ headerRow: {
   buyText: { 
     color: 'white', 
     textAlign: 'center' 
+},
+info: {
+  flexDirection: 'row',
+  color: '#C5D0DC',
+},
+white: { 
+  color: 'white' 
+},
+label: { 
+  color: '#8A9AAC', 
+},
+infoContainer: {
+  paddingLeft: 16,
+  paddingRight: 16,
+  width: '100%',
 },
 
 });

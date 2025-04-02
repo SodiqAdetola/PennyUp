@@ -6,7 +6,7 @@ const http = require('http');
 const { initialiseSocketIO } = require('./socketIO');
 const userRoutes = require('./routes/userRoutes');
 const stockRoutes = require('./routes/stockRoutes');
-
+const leaderboardRoutes = require('./routes/leaderboardRoutes');
 dotenv.config();
 
 const app = express();
@@ -32,6 +32,7 @@ admin.initializeApp({
 app.get('/', (req, res) => res.send('PennyUp Backend!'));
 app.use('/users', userRoutes);
 app.use('/stocks', stockRoutes);
+app.use('/leaderboard', leaderboardRoutes);
 
 // Socket.IO Initialization
 initialiseSocketIO(server);

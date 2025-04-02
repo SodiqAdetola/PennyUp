@@ -25,12 +25,34 @@ const SoldHistoryItem = ({ trade }) => {
       </Text>
       </View>
 
-      <Text style={styles.white}>Purchase Amount: ${trade.amount}</Text>
-      <Text style={styles.white}>Purchase Price: ${trade.purchasePrice}</Text>
-      <Text style={styles.white}>Sold Price: ${trade.currentPrice}</Text>
-      <Text style={styles.white}>Date & Time of Purchase: {new Date(trade.createdAt).toLocaleString()}</Text>
-      <Text style={styles.white}>Date & Time Sold: {new Date(trade.soldAt).toLocaleString()}</Text>
+      <View style={styles.infoContainer}>
 
+        <View style={styles.info}>
+          <Text style={styles.label}>Purchase Amount: </Text>
+            <Text style={styles.white}> ${trade.amount}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Purchase Price: </Text>
+          <Text style={styles.white}>${trade.purchasePrice}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Sold Price:</Text>
+          <Text style={styles.white}> ${trade.currentPrice}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Date & Time of Purchase:</Text>
+          <Text style={styles.white}> {new Date(trade.createdAt).toLocaleString()}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.label}>Date & Time Sold:</Text>
+          <Text style={styles.white}> {new Date(trade.soldAt).toLocaleString()}</Text>
+        </View>
+
+      </View>
       
     </View>
   );
@@ -69,5 +91,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5,
+  },
+  info: {
+    flexDirection: 'row',
+    color: '#C5D0DC',
+  },
+  white: { 
+    color: 'white' 
+  },
+  label: { 
+    color: '#8A9AAC', 
+  },
+  infoContainer: {
+    marginBottom: 12,
+    paddingLeft: 16,
+    paddingRight: 16,
+    width: '100%',
   },
 });
