@@ -205,9 +205,8 @@ const ProfitChart = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#162C46',
-    borderRadius: 12,
-    padding: 14,
-    marginHorizontal: 10,
+    paddingLeft: 10,
+    paddingTop: 5,
   },
   headerContainer: {
     marginBottom: 15,
@@ -228,20 +227,20 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   loadingContainer: {
-    height: 180,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    borderRadius: 12,
-    margin: 10,
+    paddingLeft: 10,
+    paddingTop: 5,
   },
   errorContainer: {
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    borderRadius: 12,
-    margin: 10,
+    paddingLeft: 10,
+    paddingTop: 5,
   },
   errorText: {
     color: '#FF3B30',
@@ -252,8 +251,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    borderRadius: 12,
-    margin: 10,
+    paddingLeft: 10,
+    paddingTop: 5,
   },
   noDataText: {
     color: 'white',

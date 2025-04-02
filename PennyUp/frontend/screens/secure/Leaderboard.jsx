@@ -163,7 +163,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#162C46',
     borderRadius: 10,
     marginBottom: 12,
-    padding: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 10
    
   },
   infoContainer: { 
