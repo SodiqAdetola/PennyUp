@@ -71,8 +71,9 @@ const ProfitChart = () => {
           tradeProfit: trade.profit, // Individual trade profit
           stockSymbol: trade.symbol || 'Unknown',
           label: `${saleDate.getDate()} ${saleDate.toLocaleString('en-UK', { 
-            month: 'short'
-          })}\n${saleDate.getFullYear()}`,
+            month: 'short',
+            year: 'numeric'
+          })}`,
         };
       });
       
@@ -154,22 +155,21 @@ const ProfitChart = () => {
             ${totalProfit.toFixed(2)}
           </Text>
           <Text style={[styles.changeText, { color: isRecentPositive ? '#34C759' : '#FF3B30' }]}>
-            {isRecentPositive ? '+' : ''}{recentChange.toFixed(2)} (last trade)
+            {isRecentPositive ? '+$' : ''}{recentChange.toFixed(2)} (last trade)
           </Text>
         </View>
 
         <View style={styles.chartContainer}>
           <LineChart
             data={profitData}
-            width={screenWidth}
+            width={screenWidth - 50 }
             height={120}
-            spacing={40}
+            spacing={60}
             initialSpacing={20}
             color={lineColor}
             maxValue={maxValue}
             minValue={0}
             dataPointsColor={lineColor}
-            dataPointsRadius={4}
             onPointPress={(point) => setSelectedPoint(point)}
             verticalLinesColor="rgba(255,255,255,0.1)"
             horizontalLinesColor="rgba(255,255,255,0.1)"
@@ -190,7 +190,7 @@ const ProfitChart = () => {
             yAxisTextNumberOfLines={1}
             noOfSections={noOfSections}
             scrollToEnd={true}
-            scrollAnimation={true}
+            scrollAnimation={false}
             rulesType="solid"
             rulesColor="rgba(255,255,255,0.1)"
             yAxisLabelTexts={yAxisLabelTexts}
@@ -204,7 +204,6 @@ const ProfitChart = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15,
     backgroundColor: '#162C46',
     borderRadius: 12,
     padding: 14,
@@ -218,9 +217,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     marginBottom: 6,
-  },
-  chartContainer: {
-    paddingBottom: 10,
   },
   priceText: {
     color: 'white',

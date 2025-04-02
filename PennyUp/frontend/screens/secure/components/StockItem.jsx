@@ -70,7 +70,8 @@ headerRow: {
     color: 'white' 
 },
   stockName: { 
-    fontSize: 17 
+    fontSize: 17,
+    color: '#4ECDC4',
 },
   toggleButton: { 
     alignSelf: 'center', 

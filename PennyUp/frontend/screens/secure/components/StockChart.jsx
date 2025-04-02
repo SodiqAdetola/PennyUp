@@ -5,7 +5,6 @@ import { LineChart } from 'react-native-gifted-charts';
 const screenWidth = Dimensions.get('window').width;
 
 const StockChart = ({ history, stock }) => {
-  const [selectedPoint, setSelectedPoint] = useState(null);
 
   // Calculate exact min and max prices
   const prices = history.map(h => h.close);
@@ -18,8 +17,9 @@ const StockChart = ({ history, stock }) => {
     actualValue: entry.close,
     date: new Date(entry.date),
     label: `${new Date(entry.date).getDate()} ${new Date(entry.date).toLocaleString('en-UK', { 
-      month: 'short'
-    })}\n${new Date(entry.date).getFullYear()}`,
+      month: 'short',
+      year: 'numeric'
+    })}`,
   }));
 
   // Calculate price changes between the two most recent points
@@ -37,7 +37,7 @@ const StockChart = ({ history, stock }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.priceText}>
-          ${stock.regularMarketPrice.toFixed(2)}
+          ${stock.regularMarketPrice}
         </Text>
         <Text style={[styles.changeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
           {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercentage}%)
@@ -49,8 +49,8 @@ const StockChart = ({ history, stock }) => {
           data={chartData}
           width={screenWidth - 60}
           height={200}
-          spacing={40}
-          initialSpacing={40}
+          spacing={80}
+          initialSpacing={30}
           endSpacing={30}
           thickness={2}
           color={lineColor}
@@ -69,8 +69,7 @@ const StockChart = ({ history, stock }) => {
             color: 'rgba(255,255,255,0.6)',
             fontSize: 10,
           }}
-          hideDataPoints
-          curved
+          dataPointsColor={lineColor}
           showXAxisLabel
           yAxisLabelSuffix=""
           yAxisTextNumberOfLines={1}
@@ -83,20 +82,6 @@ const StockChart = ({ history, stock }) => {
             }
             return '';
           }}
-          renderTooltip={(point) => (
-            <View style={styles.tooltip}>
-              <Text style={styles.tooltipText}>
-                ${point.actualValue.toFixed(2)}
-              </Text>
-              <Text style={styles.tooltipDate}>
-                {point.date.toLocaleDateString('en-UK', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric'
-                })}
-              </Text>
-            </View>
-          )}
         />
       </View>
     </View>
@@ -106,39 +91,19 @@ const StockChart = ({ history, stock }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    paddingHorizontal: 20,
   },
   headerContainer: {
     marginBottom: 20,
   },
   chartContainer: {
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
   priceText: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
   },
-  changeText: {
-    fontSize: 16,
-    marginTop: 5,
-  },
-  tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    padding: 10,
-    borderRadius: 5,
-    position: 'absolute',
-  },
-  tooltipText: {
-    color: '#000',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  tooltipDate: {
-    color: '#666',
-    fontSize: 12,
-    marginTop: 2,
-  },
+
 });
 
 export default StockChart;
