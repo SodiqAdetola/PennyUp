@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   sellButton: {
     alignSelf: 'center',
-    width: '90%',
+    width: '50%',
     padding: 10, 
     backgroundColor: '#F44336', 
     borderRadius: 5,
