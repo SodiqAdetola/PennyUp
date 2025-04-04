@@ -14,7 +14,7 @@ const Leaderboard = () => {
     try {
       setLoading(true);
       const response = await axios.get(`${backendURL}/leaderboard`);
-      setLeaderboard(response.data.leaderboard);
+      setLeaderboard(response.data.leaderboard.slice(0,10));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching leaderboard data:', error);
@@ -50,7 +50,7 @@ const Leaderboard = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.white, styles.header]}>Leaderboard</Text>
-      <Text style={styles.subtitle}>Weekly Revenue</Text>
+      <Text style={styles.subtitle}>Weekly Top 10 Revenue</Text>
       
       {loading ? (
         <View style={styles.loadingContainer}>

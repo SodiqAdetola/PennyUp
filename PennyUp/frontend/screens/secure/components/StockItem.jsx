@@ -113,7 +113,7 @@ headerRow: {
 },
   buyButton: {
     alignSelf: 'center',
-    width: '60%',
+    width: '40%',
     margin: 20, 
     padding: 10, 
     backgroundColor: '#4CAF50', 

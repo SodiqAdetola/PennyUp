@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   stocksContainer: {
-    marginTop: 50,
+    marginTop: 20,
     marginBottom: 0,
     width: '95%',
     height: '80%',
@@ -239,6 +239,6 @@ const styles = StyleSheet.create({
   broughtHeader: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });

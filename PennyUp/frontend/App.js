@@ -39,7 +39,7 @@ function SecureTabs() {
       }}
       >
       <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: () => (<AntDesign name="home" size={29} color="#0B2038" /> ) }}/>
-      <Tab.Screen name="Trades" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-exchange" size={25} color="#0B2038" />) }}/>
+      <Tab.Screen name="Trade" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-exchange" size={25} color="#0B2038" />) }}/>
       <Tab.Screen name="History" component={navHistory} options={{ tabBarIcon: () => (<MaterialIcons name="history" size={30} color="#0B2038" />) }}/>
       <Tab.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: () => (<Ionicons name="podium-outline" size={30} color="black" />) }}/>
     </Tab.Navigator>

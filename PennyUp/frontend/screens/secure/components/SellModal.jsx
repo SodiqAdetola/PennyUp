@@ -7,8 +7,6 @@ const SellModal = ({ visible, onClose, stock, onConfirm }) => {
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalHeader}>Sell {stock?.stockName || "Stock"}</Text>
-          <Text style={styles.modalText}>Purchase Price: ${stock?.purchasePrice}</Text>
-          <Text style={styles.modalText}>Current Price: ${stock?.currentPrice}</Text>
           
           <View style={styles.buttonRow}>
             <Button title="Cancel" onPress={onClose} />
@@ -33,17 +31,21 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: '80%',
+
   },
   modalHeader: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'white',
+    textAlign: 'center',
   },
   modalText: {
     fontSize: 16,
     marginVertical: 5,
     color: 'white',
+    textAlign: 'center',
+
   },
   buttonRow: {
     flexDirection: 'row',

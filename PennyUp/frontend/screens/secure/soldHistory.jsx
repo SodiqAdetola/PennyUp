@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   soldHeader: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   broughtHeader: {
     color: 'white',

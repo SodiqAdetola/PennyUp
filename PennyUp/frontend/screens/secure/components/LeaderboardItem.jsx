@@ -7,7 +7,15 @@ const LeaderboardItem = ({ item, formatDate }) => {
       <View style={styles.infoContainer}>
         <View style={styles.userInfoContainer}>
           {/* User info and total profit */}
-          <View style={styles.rankContainer}>
+          <View   style={[styles.rankContainer,
+    item.rank === 1
+      ? styles.rankGold
+      : item.rank === 2
+      ? styles.rankSilver
+      : item.rank === 3
+      ? styles.rankBronze
+      : styles.rankDefault,
+  ]}>
             <Text style={[styles.white, styles.rank]}>{item.rank}</Text>
           </View>
           <Text style={[styles.white, styles.username]}>{item.username}</Text>
@@ -19,7 +27,8 @@ const LeaderboardItem = ({ item, formatDate }) => {
       </View>
       
       {/* Best trade section */}
-      <View style={styles.bestTradeContainer}>
+    <View style={styles.bestTradeContainer}>
+      <View style={styles.shinyEffect} />
         <Text style={styles.bestTradeHeader}>Best Trade</Text>
         
         {/* Stock info */}
@@ -44,6 +53,7 @@ const LeaderboardItem = ({ item, formatDate }) => {
             <Text style={styles.label}>Date Sold:</Text>
             <Text style={styles.value}>{formatDate(item.bestTrade.soldAt)}</Text>
           </View>
+      
         </View>
         
         {/* Profit */}
@@ -63,10 +73,12 @@ const LeaderboardItem = ({ item, formatDate }) => {
 const styles = StyleSheet.create({
   rankingItem: {
     backgroundColor: '#132d4a',
-    borderRadius: 15,
+    borderRadius: 20,
     marginBottom: 12,
     marginHorizontal: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
+    borderWidth: 0.5,
+    borderColor: '#4ECDC4',
   },
   infoContainer: { 
     flexDirection: 'row',
@@ -79,15 +91,27 @@ const styles = StyleSheet.create({
     gap: 10,
   },  
   rankContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#4ECDC4',
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: '#dba50f',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
     marginLeft: 8,   
   },
+  rankGold: {
+    backgroundColor: '#D4AF37', 
+  },
+  rankSilver: {
+    backgroundColor: '#999B9B', 
+  },
+  rankBronze: {
+    backgroundColor: '#b08d57', 
+  },
+  rankDefault: {
+    backgroundColor: '#57636D', 
+  },  
   rank: {
     fontWeight: 'bold',
     fontSize: 20,
@@ -95,20 +119,34 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 18,
     fontWeight: '500',
+    marginBottom: 8,
   },
   profit: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 4,
-    marginBottom: 12,
+    marginBottom: 8,
     marginRight: 8,
     textAlign: 'right',
   },
   bestTradeContainer: {
     backgroundColor: '#0F1F30',
-
+    marginBottom: 12,
+    borderBottomWidth: 0.3,
+    borderTopWidth: 0.3,
+    borderColor: '#4ECDC4',
     padding: 12,
     width: '100%',
+    overflow: 'hidden',
+  },
+  shinyEffect: {
+    position: 'absolute',
+    top: 0,
+    left: 80,
+    width: '120%',
+    height: '30%',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    transform: [{ rotate: '-50deg' }], 
+    opacity: 0.5,
   },
   bestTradeHeader: {
     color: '#8A9AAC',
