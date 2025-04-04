@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
-import NewsItem from './NewsItem'; 
+import NewsItem from './NewsItem';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
@@ -40,8 +40,8 @@ const News = () => {
   };
 
   const handleSearch = () => {
-    if (searchQuery) {
-      fetchNews(searchQuery);
+    if (searchQuery.trim()) {
+      fetchNews(searchQuery.trim());
     }
   };
 
@@ -59,6 +59,7 @@ const News = () => {
           placeholder="Search financial news..."
           value={searchQuery}
           onChangeText={setSearchQuery}
+          returnKeyType="search"
           onSubmitEditing={handleSearch}
         />
         {searchQuery ? (

@@ -63,9 +63,9 @@ const LeaderboardItem = ({ item, formatDate }) => {
 const styles = StyleSheet.create({
   rankingItem: {
     backgroundColor: '#132d4a',
-    borderRadius: 10,
+    borderRadius: 15,
     marginBottom: 12,
-    paddingHorizontal: 10,
+    marginHorizontal: 10,
     paddingVertical: 10
   },
   infoContainer: { 
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
+    marginLeft: 8,   
   },
   rank: {
     fontWeight: 'bold',
@@ -100,11 +101,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 4,
     marginBottom: 12,
+    marginRight: 8,
     textAlign: 'right',
   },
   bestTradeContainer: {
     backgroundColor: '#0F1F30',
-    borderRadius: 8,
+
     padding: 12,
     width: '100%',
   },
