@@ -30,9 +30,16 @@ function initialiseSocketIO(server) {
               return {
                 symbol,
                 longName: quote.longName,
+                displayName: quote.displayName,
                 regularMarketPrice: quote.regularMarketPrice,
                 marketCap: quote.marketCap,
+                forwardPE: quote.forwardPE,
+                trailingPE: quote.trailingPE,
+                epsCurrentYear: quote.epsCurrentYear,
+                epsTrailingTwelveMonths: quote.epsTrailingTwelveMonths,
+                epsForward: quote.epsForward,
                 history,
+          
               };
             } catch (err) {
               console.error(`Failed to fetch data for ${symbol}:`, err);
@@ -55,7 +62,7 @@ function initialiseSocketIO(server) {
       const interval = setInterval(async () => {
         const updatedData = await fetchStockData(symbols);
         socket.emit('stockUpdates', updatedData);
-      }, 60000); // 1 minute
+      }, 120000); // 2 minute
 
       socket.on('disconnect', () => {
         clearInterval(interval);

@@ -62,7 +62,7 @@ export default SoldHistoryItem;
 
 const styles = StyleSheet.create({
   stockItem: { 
-    backgroundColor: '#1C3A5B', 
+    backgroundColor: '#132d4a', 
     padding: 10, 
     marginBottom: 10, 
     borderRadius: 10, 

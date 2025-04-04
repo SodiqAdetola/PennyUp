@@ -63,7 +63,7 @@ export default HistoryItem;
 
 const styles = StyleSheet.create({
   stockItem: { 
-    backgroundColor: '#1C3A5B', 
+    backgroundColor: '#132d4a', 
     marginBottom: 10, 
     borderRadius: 10, 
     width: '100%',

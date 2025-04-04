@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TextInput, ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import StockItem from './components/StockItem';
 import BuyModal from './components/BuyModal';
 import SocketService from './services/SocketService'; // Import the shared service
+import { AntDesign } from '@expo/vector-icons';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
@@ -249,7 +250,7 @@ const Trades = () => {
         data={filteredStocks}
         renderItem={renderStockItem}
         keyExtractor={(item) => item.symbol}
-        ListEmptyComponent={<Text style={styles.white}>No stocks found</Text>}
+        ListEmptyComponent={<Text style={[styles.white, styles.noStocksMessage]}>No stocks found</Text>}
       />
     );
   };
@@ -265,10 +266,11 @@ const Trades = () => {
       <TextInput
         style={styles.searchBar}
         placeholder="Search stocks..."
-        placeholderTextColor="#888"
+        placeholderTextColor="#8A9AAC"
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
+  
       <View style={styles.stocksContainer}>{renderContent()}</View>
 
       <BuyModal
@@ -333,5 +335,10 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     marginTop: 20,
+  },
+  noStocksMessage: {
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });

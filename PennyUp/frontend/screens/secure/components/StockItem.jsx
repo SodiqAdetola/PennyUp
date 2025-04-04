@@ -29,15 +29,45 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
           <Text style={styles.label}>Market Cap: </Text>
           <Text style={styles.white}> ${Number(stock.marketCap).toLocaleString()}</Text>
         </View>
+        
       </View>
 
       {isExpanded && stock.history && (
         <View style={styles.chartContainer}>
+
+        <View style={styles.hr} />
+
+        <View style={styles.moreInfoContainer}>
+
+        <View style={styles.EPSContainer}>
+          <Text style={[styles.infoHeading]}>Earnings Per Share</Text>
+        <View style={styles.info}>
+          <Text style={styles.label}>Current EPS: </Text>
+          <Text style={styles.white}> ${Number(stock.epsCurrentYear).toLocaleString()}</Text>
+        </View>
+        <View style={styles.info}>
+          <Text style={styles.label}>Forward EPS: </Text>
+          <Text style={styles.white}> ${Number(stock.epsForward).toLocaleString()}</Text>
+        </View>
+        </View>
+
+        <View style={styles.PEContainer}>
+        <Text style={[styles.infoHeading]}>Price to Earnings</Text>
+        <View style={styles.info}>
+          <Text style={styles.label}>Trailing PE: </Text>
+          <Text style={styles.white}> ${Number(stock.trailingPE).toLocaleString()}</Text>
+        </View>
+        <View style={styles.info}>
+          <Text style={styles.label}>Forward PE: </Text>
+          <Text style={styles.white}> ${Number(stock.forwardPE).toLocaleString()}</Text>
+        </View>
+        </View>
+          
+        </View>
+
           <StockChart history={stock.history} stock={stock} />
-          <TouchableOpacity 
-            style={styles.buyButton} 
-            onPress={() => handleBuyPress(stock)}
-          >
+
+          <TouchableOpacity style={styles.buyButton} onPress={() => handleBuyPress(stock)}>
             <Text style={styles.buyText}>Buy</Text>
           </TouchableOpacity>
         </View>
@@ -57,7 +87,7 @@ export default StockItem;
 
 const styles = StyleSheet.create({
   stockItem: { 
-    backgroundColor: '#1C3A5B', 
+    backgroundColor: '#132d4a',
     padding: 10, marginBottom: 10, 
     borderRadius: 10 
 },
@@ -71,7 +101,8 @@ headerRow: {
 },
   stockName: { 
     fontSize: 17,
-    color: '#4ECDC4',
+    color: 'white',
+    fontWeight: 'bold',
 },
   toggleButton: { 
     alignSelf: 'center', 
@@ -107,5 +138,27 @@ infoContainer: {
   paddingRight: 16,
   width: '100%',
 },
+
+moreInfoContainer: {
+  marginBottom: 10,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-evenly',
+},
+
+hr: {
+  borderTopWidth: 1,
+  borderTopColor: 'grey',
+  marginVertical: 10,
+},
+
+infoHeading: {
+  color: 'white',
+  fontSize: 15,
+  fontWeight: '600',
+  marginBottom: 2,
+},
+
+
 
 });

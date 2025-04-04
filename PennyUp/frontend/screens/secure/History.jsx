@@ -39,8 +39,9 @@ const History = ({ navigation }) => {
             currentPrice: currentPrice !== undefined ? currentPrice : trade.currentPrice
           };
         });
+        const sortedTrades = updatedTrades.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Update 'soldAt' if necessary
         
-        setBroughtTrades(updatedTrades);
+        setBroughtTrades(sortedTrades);
       } else {
         setBroughtTrades([]);
       }

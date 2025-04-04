@@ -11,20 +11,12 @@ const ProfitChart = () => {
   const [profitData, setProfitData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedPoint, setSelectedPoint] = useState(null);
   const [totalProfit, setTotalProfit] = useState(0);
   const [recentChange, setRecentChange] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchProfitData();
   }, []);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchProfitData();
-    setRefreshing(false);
-  };
 
   const fetchProfitData = async () => {
     try {
@@ -111,30 +103,44 @@ const ProfitChart = () => {
     );
   }
 
+  // If there's no data, show an empty state
   if (profitData.length === 0) {
     return (
-      <View style={styles.noDataContainer}>
-        <Text style={styles.noDataText}>No profit data available yet.</Text>
-        <Text style={styles.noDataSubText}>Sell stocks with profit to see your progress.</Text>
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>No profit data available yet.</Text>
       </View>
     );
   }
 
-  // Calculate max profit for chart scaling
+  // Calculate max and min profit for chart scaling
   const profits = profitData.map(item => item.profit);
   const maxProfit = Math.max(...profits);
+  const minProfit = Math.min(...profits);
   
-  // Add a small buffer (10%) above the max profit for better visualization
-  const maxValue = Math.max(maxProfit * 1.1, 1); // Ensure at least 1 as max if profits are very small
+  // Add a small buffer (10%) above max and below min for better visualization
+  let maxValue = maxProfit * 1.1;
+  let minValue = minProfit * 1.1;
   
-  // Create custom y-axis labels
+  // If we have negative values, ensure the buffer makes them "more negative"
+  if (minValue < 0) {
+    minValue = minProfit * 1.1;
+  }
+  
+  // If all values are very close to zero, ensure we have some visible range
+  if (Math.abs(maxValue - minValue) < 1) {
+    maxValue = Math.max(1, maxValue);
+    minValue = Math.min(-1, minValue);
+  }
+  
+  // Create custom y-axis labels that account for the full range
   const noOfSections = 5; // 5 divisions on y-axis
   const yAxisLabelTexts = [];
+  const valueRange = maxValue - minValue;
   
   for (let i = 0; i <= noOfSections; i++) {
-    const value = (maxValue / noOfSections) * i;
+    const value = minValue + (valueRange / noOfSections) * i;
     // Format to 1 decimal place if small value, otherwise round to integer
-    const formattedValue = value < 10 ? value.toFixed(2) : Math.round(value);
+    const formattedValue = Math.abs(value) < 10 ? value.toFixed(2) : Math.round(value);
     yAxisLabelTexts.push(formattedValue.toString());
   }
   
@@ -143,11 +149,7 @@ const ProfitChart = () => {
   const lineColor = isPositive ? '#34C759' : '#FF3B30';
 
   return (
-    <View 
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#4ECDC4" />
-      }
-    >
+    <View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Profit Overview</Text>
@@ -155,22 +157,22 @@ const ProfitChart = () => {
             ${totalProfit.toFixed(2)}
           </Text>
           <Text style={[styles.changeText, { color: isRecentPositive ? '#34C759' : '#FF3B30' }]}>
-            {isRecentPositive ? '+$' : ''}{recentChange.toFixed(2)} (last trade)
+            {isRecentPositive ? '+$' : '-$'}{Math.abs(recentChange).toFixed(2)} (last trade)
           </Text>
         </View>
 
         <View style={styles.chartContainer}>
           <LineChart
             data={profitData}
-            width={screenWidth - 50 }
+            width={screenWidth - 50}
             height={120}
             spacing={60}
-            initialSpacing={20}
+            initialSpacing={30}
+            endSpacing={50}
             color={lineColor}
             maxValue={maxValue}
-            minValue={0}
+            minValue={minValue}
             dataPointsColor={lineColor}
-            onPointPress={(point) => setSelectedPoint(point)}
             verticalLinesColor="rgba(255,255,255,0.1)"
             horizontalLinesColor="rgba(255,255,255,0.1)"
             xAxisColor="rgba(255,255,255,0.3)"
@@ -196,7 +198,6 @@ const ProfitChart = () => {
             yAxisLabelTexts={yAxisLabelTexts}
           />
         </View>
-        
       </View>
     </View>
   );
@@ -246,25 +247,17 @@ const styles = StyleSheet.create({
     color: '#FF3B30',
     textAlign: 'center',
   },
-  noDataContainer: {
-    height: 120,
+  emptyContainer: {
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
     paddingLeft: 10,
     paddingTop: 5,
   },
-  noDataText: {
+  emptyText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  noDataSubText: {
-    color: '#aaa',
-    textAlign: 'center',
-    marginTop: 6,
-    fontSize: 13,
   },
 });
 

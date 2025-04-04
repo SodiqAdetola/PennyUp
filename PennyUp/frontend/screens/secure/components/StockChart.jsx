@@ -48,7 +48,7 @@ const StockChart = ({ history, stock }) => {
         <LineChart
           data={chartData}
           width={screenWidth - 60}
-          height={200}
+          height={150}
           spacing={80}
           initialSpacing={30}
           endSpacing={30}
@@ -90,7 +90,7 @@ const StockChart = ({ history, stock }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 0,
   },
   headerContainer: {
     marginBottom: 20,
