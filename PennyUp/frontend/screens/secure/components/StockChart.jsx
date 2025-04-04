@@ -37,7 +37,7 @@ const StockChart = ({ history, stock }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.priceText}>
-          ${stock.regularMarketPrice}
+          ${Number(stock.regularMarketPrice).toFixed(2)}
         </Text>
         <Text style={[styles.changeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
           {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercentage}%)

@@ -9,6 +9,8 @@ import { refreshToken } from './authUtil';
 //Icons
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Feather from '@expo/vector-icons/Feather';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 //Screens
 import Login from './screens/Login';
@@ -36,10 +38,10 @@ function SecureTabs() {
       }
       }}
       >
-      <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: () => (<AntDesign name="home" size={30} color="#0B2038" /> ) }}/>
-      <Tab.Screen name="Trades" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-pound" size={30} color="#0B2038" />) }}/>
+      <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: () => (<AntDesign name="home" size={29} color="#0B2038" /> ) }}/>
+      <Tab.Screen name="Trades" component={Trades} options={{ tabBarIcon: () => (<MaterialIcons name="currency-exchange" size={25} color="#0B2038" />) }}/>
       <Tab.Screen name="History" component={navHistory} options={{ tabBarIcon: () => (<MaterialIcons name="history" size={30} color="#0B2038" />) }}/>
-      <Tab.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: () => (<MaterialIcons name="leaderboard" size={30} color="#0B2038" />) }}/>
+      <Tab.Screen name="Leaderboard" component={Leaderboard} options={{ tabBarIcon: () => (<Ionicons name="podium-outline" size={30} color="black" />) }}/>
     </Tab.Navigator>
 
   );

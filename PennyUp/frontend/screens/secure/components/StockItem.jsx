@@ -43,11 +43,11 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
           <Text style={[styles.infoHeading]}>Earnings Per Share</Text>
         <View style={styles.info}>
           <Text style={styles.label}>Current EPS: </Text>
-          <Text style={styles.white}> ${Number(stock.epsCurrentYear).toLocaleString()}</Text>
+          <Text style={styles.white}> ${Number(stock.epsCurrentYear).toFixed(2)}</Text>
         </View>
         <View style={styles.info}>
           <Text style={styles.label}>Forward EPS: </Text>
-          <Text style={styles.white}> ${Number(stock.epsForward).toLocaleString()}</Text>
+          <Text style={styles.white}> ${Number(stock.epsForward).toFixed(2)}</Text>
         </View>
         </View>
 
@@ -55,11 +55,11 @@ const StockItem = ({ stock, isExpanded, toggleExpand, handleBuyPress, handleFavo
         <Text style={[styles.infoHeading]}>Price to Earnings</Text>
         <View style={styles.info}>
           <Text style={styles.label}>Trailing PE: </Text>
-          <Text style={styles.white}> ${Number(stock.trailingPE).toLocaleString()}</Text>
+          <Text style={styles.white}> ${Number(stock.trailingPE).toFixed(2)}</Text>
         </View>
         <View style={styles.info}>
           <Text style={styles.label}>Forward PE: </Text>
-          <Text style={styles.white}> ${Number(stock.forwardPE).toLocaleString()}</Text>
+          <Text style={styles.white}> ${Number(stock.forwardPE).toFixed(2)}</Text>
         </View>
         </View>
           
