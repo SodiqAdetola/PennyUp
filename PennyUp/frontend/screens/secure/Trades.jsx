@@ -264,7 +264,7 @@ const Trades = () => {
           <Text style={[styles.balance, styles.white]}>{error}</Text>
         ) : balance !== null ? (
           <Text style={[styles.balance, styles.white]}>
-            ${Number(balance).toFixed(2).toLocaleString()}
+            ${Number(balance).toLocaleString('en-UK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </Text>
         ) : (
           <ActivityIndicator size="large" color="white" />

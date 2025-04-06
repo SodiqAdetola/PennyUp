@@ -15,7 +15,6 @@ exports.createUser = async (req, res) => {
             username,
             broughtTrades: [],
             soldTrades: [],
-            accountBalance: 1000.00
         })
 
         await newUser.save();

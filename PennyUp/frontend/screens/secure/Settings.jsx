@@ -100,14 +100,13 @@ const Settings = ({ userData, onClose, updateUserData, backendURL }) => {
       const user = FIREBASE_AUTH.currentUser
       const firebaseUID = user.uid
 
-      // Delete from backend first
+      //delete Firebase auth user
+      await deleteUser(user)
+
+      //delete from backend
       await axios.delete(`${backendURL}/users/${firebaseUID}`)
       
-      // Then delete Firebase auth user
-      await deleteUser(user)
-      
       Alert.alert('Account Deleted', 'Your account has been permanently deleted')
-      // User will be automatically redirected to login screen after auth state changes
     } catch (error) {
       console.error('Error deleting account:', error)
       Alert.alert('Error', 'Failed to delete account. You may need to re-authenticate.')
@@ -192,6 +191,8 @@ const Settings = ({ userData, onClose, updateUserData, backendURL }) => {
             </View>
           </View>
 
+          <View style={styles.hr} />
+
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Change Password</Text>
             <View style={styles.inputGroup}>
@@ -227,6 +228,8 @@ const Settings = ({ userData, onClose, updateUserData, backendURL }) => {
               </TouchableOpacity>
             </View>
           </View>
+
+          <View style={styles.hr} />
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Account Management</Text>
@@ -291,7 +294,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   section: {
-    marginBottom: 30,
+    marginBottom: 10,
+    marginTop: 20,
   },
   sectionTitle: {
     fontSize: 20,
@@ -305,12 +309,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: '#333',
-    marginBottom: 8,
+    marginBottom: 3,
   },
   input: {
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
-    padding: 15,
+    padding: 10,
     fontSize: 16,
     marginBottom: 15,
     borderWidth: 1,
@@ -379,4 +383,11 @@ const styles = StyleSheet.create({
   cancelButton: {
     backgroundColor: '#888',
   },
+  hr: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginVertical: 20,
+    width: '100%',
+  },
+  
 })
