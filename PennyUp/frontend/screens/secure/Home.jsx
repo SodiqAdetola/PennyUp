@@ -5,10 +5,10 @@ import { FIREBASE_AUTH } from '../../firebaseConfig'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import axios from 'axios'
 
-import LogoutModal from './components/LogoutModal'
+import LogoutModal from './components/modals/LogoutModal'
 import News from './components/News'
 import Guides from './components/Guides'
-import Settings from './Settings'
+import Settings from './components/Settings'
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com'
 

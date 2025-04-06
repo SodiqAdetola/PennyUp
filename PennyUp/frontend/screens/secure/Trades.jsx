@@ -4,7 +4,7 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import StockItem from './components/StockItem';
-import BuyModal from './components/BuyModal';
+import BuyModal from './components/modals/BuyModal';
 import SocketService from './services/SocketService'; // Import the shared service
 import { AntDesign } from '@expo/vector-icons';
 

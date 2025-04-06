@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import HistoryItem from './components/HistoryItem';
-import SellModal from './components/SellModal';
+import SellModal from './components/modals/SellModal';
 import SocketService from './services/SocketService';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
