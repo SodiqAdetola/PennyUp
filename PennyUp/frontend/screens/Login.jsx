@@ -1,7 +1,9 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { FIREBASE_AUTH } from '../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { sendPasswordResetEmail } from "firebase/auth";
+import { Modal } from 'react-native';
 
 
 const Login = ( { navigation } ) => {
@@ -10,6 +12,10 @@ const Login = ( { navigation } ) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const auth = FIREBASE_AUTH;
+
+    const [showResetModal, setShowResetModal] = useState(false);
+    const [resetEmail, setResetEmail] = useState('');
+
 
 
     const LoginHandler = async () => {
@@ -22,8 +28,23 @@ const Login = ( { navigation } ) => {
             console.log(error);
             alert('Sign in failed: ' + error.message)
         }
-
     }    
+
+    const handlePasswordReset = async () => {
+        if (!resetEmail) {
+          alert("Please enter your email.");
+          return;
+        }
+        try {
+          await sendPasswordResetEmail(auth, resetEmail);
+          alert("Password reset email sent!");
+          setShowResetModal(false);
+          setResetEmail('');
+        } catch (error) {
+          alert("Error: " + error.message);
+        }
+      };
+      
 
 
 
@@ -52,7 +73,11 @@ const Login = ( { navigation } ) => {
                 style={styles.input}
                 secureTextEntry
                 />
+                <TouchableOpacity onPress={() => setShowResetModal(true)}>
+                    <Text style={[styles.white, styles.resetText]}>Forgot Password?</Text>
+                </TouchableOpacity>
             </View>
+            
 
             <View >
                 <TouchableOpacity style={[styles.button,]} onPress={LoginHandler}>
@@ -68,7 +93,40 @@ const Login = ( { navigation } ) => {
         </View>
         </KeyboardAvoidingView>
 
+
+
+
+        <Modal visible={showResetModal} animationType="slide" transparent={true}>
+            <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                <Text style={[{ fontSize: 18, marginBottom: 10},styles.white]}>Reset Password</Text>
+                <TextInput
+                    placeholder="Enter your email"
+                    placeholderTextColor="#888"
+                    value={resetEmail}
+                    onChangeText={setResetEmail}
+                    style={styles.resetInput}
+                />
+
+                <View style={[ styles.resetButtonContainer]}>
+
+                    <TouchableOpacity onPress={() => setShowResetModal(false)}>
+                        <Text style={[styles.resetButtonText]}>Cancel</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.resetButton} onPress={handlePasswordReset}>
+                        <Text style={[styles.resetButtonText]}>Send Reset</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+            </View>
+        </Modal>
+
+
     </View>
+
+
+
 
 
   )
@@ -133,7 +191,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
 
     },
-
     button: {
         minWidth: '60%',
         backgroundColor: '#001E44',
@@ -144,28 +201,61 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 5,
-
-        
     },
-
     buttonText: {
         textAlign: 'center',
         color: 'white',
         fontSize: 20,
     },
-
-
     link: {
         flexDirection: 'row',
     },
-
-
     newAccountText: {
         color: '#72b7ff',
         marginBottom: 50,
     },
-
     white: {
         color: 'white',
-    }
+    },
+
+    resetText: {
+        color: '#72b7ff',
+        marginTop: 10,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.69)',
+      },
+      
+      modalContainer: {
+        width: '80%',
+        padding: 20,
+        borderRadius: 10,
+        backgroundColor: '#1C3A5B',
+        alignItems: 'center',
+      },
+      resetInput: {
+        width: '80%',
+        backgroundColor: 'white',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 10,
+
+    },
+    resetButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginTop: 20,
+    },
+    resetButtonText: {
+        textAlign: 'center',
+        fontSize: 15,
+        color: '#72b7ff',
+    },
+      
 })

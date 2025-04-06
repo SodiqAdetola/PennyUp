@@ -73,7 +73,7 @@ const LeaderboardItem = ({ item, formatDate }) => {
 const styles = StyleSheet.create({
   rankingItem: {
     backgroundColor: '#132d4a',
-    borderRadius: 20,
+    borderRadius: 15,
     marginBottom: 12,
     marginHorizontal: 10,
     paddingVertical: 10,
@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,   
   },
   rankGold: {
-    backgroundColor: '#D4AF37', 
+    backgroundColor: '#E5B43A', 
   },
   rankSilver: {
-    backgroundColor: '#999B9B', 
+    backgroundColor: '#9EAFB9', 
   },
   rankBronze: {
-    backgroundColor: '#b08d57', 
+    backgroundColor: '#BF816A', 
   },
   rankDefault: {
     backgroundColor: '#57636D', 

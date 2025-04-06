@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 
   },
   modalHeader: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'white',

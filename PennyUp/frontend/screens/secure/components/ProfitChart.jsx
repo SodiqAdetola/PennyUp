@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, Text, ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, ActivityIndicator } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
@@ -11,6 +11,7 @@ const ProfitChart = () => {
   const [profitData, setProfitData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState(null);
   const [totalProfit, setTotalProfit] = useState(0);
   const [recentChange, setRecentChange] = useState(0);
 
@@ -46,10 +47,8 @@ const ProfitChart = () => {
       const tradesResponse = await axios.post(`${backendURL}/stocks/stock`, { stockIDs });
       const soldTrades = tradesResponse.data;
       
-      // Sort trades by soldAt date
       const sortedTrades = [...soldTrades].sort((a, b) => new Date(a.soldAt) - new Date(b.soldAt));
       
-      // Create cumulative profit data for each sale
       let runningTotal = 0;
       const chartData = sortedTrades.map(trade => {
         const saleDate = new Date(trade.soldAt);
@@ -58,23 +57,19 @@ const ProfitChart = () => {
         return {
           date: saleDate,
           profit: runningTotal,
-          value: runningTotal, // For chart
-          actualValue: runningTotal, // For tooltip
-          tradeProfit: trade.profit, // Individual trade profit
+          value: runningTotal,
+          tradeProfit: trade.profit,
           stockSymbol: trade.symbol || 'Unknown',
           label: `${saleDate.getDate()} ${saleDate.toLocaleString('en-UK', { 
             month: 'short',
             year: 'numeric'
-          })}`,
+          })}\n${saleDate.getFullYear()}`,
         };
       });
       
       setProfitData(chartData);
-      
-      // Set total profit (final cumulative value)
       setTotalProfit(runningTotal);
       
-      // Calculate most recent trade profit
       if (sortedTrades.length > 0) {
         setRecentChange(sortedTrades[sortedTrades.length - 1].profit);
       }
@@ -85,6 +80,65 @@ const ProfitChart = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const calculateYAxisLabels = (min, max, targetCount = 4) => {
+    const range = max - min;
+    
+    // Handle case where all values are the same
+    if (range === 0) {
+      return {
+        labels: [min - 1, min, min + 1],
+        min: min - 1,
+        max: min + 1,
+        step: 1
+      };
+    }
+
+    let step = range / targetCount;
+    const exponent = Math.floor(Math.log10(step));
+    const fraction = step / Math.pow(10, exponent);
+    
+    let niceStep;
+    if (fraction <= 1) niceStep = 1 * Math.pow(10, exponent);
+    else if (fraction <= 2) niceStep = 2 * Math.pow(10, exponent);
+    else if (fraction <= 5) niceStep = 5 * Math.pow(10, exponent);
+    else niceStep = 10 * Math.pow(10, exponent);
+    
+    niceStep = Math.max(niceStep, 0.1);
+    
+    // Adjust for very large ranges
+    if (range > 1000) {
+      niceStep = Math.ceil(niceStep / 100) * 100;
+    } else if (range > 100) {
+      niceStep = Math.ceil(niceStep / 10) * 10;
+    }
+
+    const niceMin = Math.floor(min / niceStep) * niceStep;
+    const niceMax = Math.ceil(max / niceStep) * niceStep;
+    
+    const labels = [];
+    for (let value = niceMin; value <= niceMax; value += niceStep) {
+      labels.push(value);
+    }
+
+    // Ensure we have at least 3 distinct labels
+    if (labels.length < 3) {
+      const center = (niceMin + niceMax) / 2;
+      return {
+        labels: [niceMin, center, niceMax],
+        min: niceMin,
+        max: niceMax,
+        step: niceStep
+      };
+    }
+
+    return {
+      labels,
+      min: niceMin,
+      max: niceMax,
+      step: niceStep
+    };
   };
 
   if (isLoading) {
@@ -103,47 +157,24 @@ const ProfitChart = () => {
     );
   }
 
-  // If there's no data, show an empty state
   if (profitData.length === 0) {
     return (
-      <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>No profit data available yet.</Text>
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>No profit data available yet.</Text>
+        <Text style={styles.noDataSubText}>Sell stocks with profit to see your progress.</Text>
       </View>
     );
   }
 
-  // Calculate max and min profit for chart scaling
   const profits = profitData.map(item => item.profit);
   const maxProfit = Math.max(...profits);
   const minProfit = Math.min(...profits);
-  
-  // Add a small buffer (10%) above max and below min for better visualization
-  let maxValue = maxProfit * 1.1;
-  let minValue = minProfit * 1.1;
-  
-  // If we have negative values, ensure the buffer makes them "more negative"
-  if (minValue < 0) {
-    minValue = minProfit * 1.1;
-  }
-  
-  // If all values are very close to zero, ensure we have some visible range
-  if (Math.abs(maxValue - minValue) < 1) {
-    maxValue = Math.max(1, maxValue);
-    minValue = Math.min(-1, minValue);
-  }
-  
-  // Create custom y-axis labels that account for the full range
-  const noOfSections = 5; // 5 divisions on y-axis
-  const yAxisLabelTexts = [];
-  const valueRange = maxValue - minValue;
-  
-  for (let i = 0; i <= noOfSections; i++) {
-    const value = minValue + (valueRange / noOfSections) * i;
-    // Format to 1 decimal place if small value, otherwise round to integer
-    const formattedValue = Math.abs(value) < 10 ? value.toFixed(2) : Math.round(value);
-    yAxisLabelTexts.push(formattedValue.toString());
-  }
-  
+
+  const { labels, min, max, step } = calculateYAxisLabels(minProfit, maxProfit);
+  const shiftAmount = -min;
+  const adjustedRange = max - min;
+  const uniqueLabels = [...new Set(labels)];
+
   const isPositive = totalProfit >= 0;
   const isRecentPositive = recentChange >= 0;
   const lineColor = isPositive ? '#34C759' : '#FF3B30';
@@ -157,22 +188,33 @@ const ProfitChart = () => {
             ${totalProfit.toFixed(2)}
           </Text>
           <Text style={[styles.changeText, { color: isRecentPositive ? '#34C759' : '#FF3B30' }]}>
-            {isRecentPositive ? '+$' : '-$'}{Math.abs(recentChange).toFixed(2)} (last trade)
+            {isRecentPositive ? '+' : ''}{recentChange.toFixed(2)} (last trade)
           </Text>
         </View>
 
         <View style={styles.chartContainer}>
           <LineChart
-            data={profitData}
-            width={screenWidth - 50}
+            style={styles.chart}
+            data={profitData.map(item => ({
+              ...item,
+              value: item.value + shiftAmount
+            }))}
+            width={330}
             height={120}
             spacing={60}
             initialSpacing={30}
-            endSpacing={50}
+            endSpacing={20}
+            thickness={2}
             color={lineColor}
-            maxValue={maxValue}
-            minValue={minValue}
+            maxValue={adjustedRange}
+            minValue={0}
             dataPointsColor={lineColor}
+            dataPointsRadius={4}
+            onPointPress={(point) => setSelectedPoint({
+              ...point,
+              value: point.value - shiftAmount
+            })}
+            enablePanGesture
             verticalLinesColor="rgba(255,255,255,0.1)"
             horizontalLinesColor="rgba(255,255,255,0.1)"
             xAxisColor="rgba(255,255,255,0.3)"
@@ -187,15 +229,20 @@ const ProfitChart = () => {
               width: 50,
               textAlign: 'center',
             }}
+            showDataPoints={profitData.length <= 15}
             showXAxisLabel
             yAxisLabelSuffix=""
             yAxisTextNumberOfLines={1}
-            noOfSections={noOfSections}
+            noOfSections={uniqueLabels.length - 1}
+            yAxisLabelTexts={uniqueLabels.map(label => 
+              `$${Math.abs(label) < 10 ? label.toFixed(1) : Math.round(label)}`
+            )}
+            formatYLabel={() => ''}
             scrollToEnd={true}
-            scrollAnimation={false}
+            scrollAnimation={true}
             rulesType="solid"
             rulesColor="rgba(255,255,255,0.1)"
-            yAxisLabelTexts={yAxisLabelTexts}
+            yAxisOffset={0}
           />
         </View>
       </View>
@@ -206,8 +253,11 @@ const ProfitChart = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#162C46',
-    paddingLeft: 10,
-    paddingTop: 5,
+    padding: 14,
+    borderRadius: 12,
+  },
+  chart: {
+    minHeight: 150,
   },
   headerContainer: {
     marginBottom: 15,
@@ -225,39 +275,47 @@ const styles = StyleSheet.create({
   },
   changeText: {
     fontSize: 14,
-    marginTop: 2,
+    marginTop: 4,
   },
   loadingContainer: {
-    height: 200,
+    height: 180,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    paddingLeft: 10,
-    paddingTop: 5,
+    borderRadius: 12,
+    margin: 10,
   },
   errorContainer: {
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    paddingLeft: 10,
-    paddingTop: 5,
+    borderRadius: 12,
+    margin: 10,
   },
   errorText: {
     color: '#FF3B30',
     textAlign: 'center',
   },
-  emptyContainer: {
-    height: 80,
+  noDataContainer: {
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#162C46',
-    paddingLeft: 10,
-    paddingTop: 5,
+    borderRadius: 12,
+    margin: 10,
   },
-  emptyText: {
+  noDataText: {
     color: 'white',
     textAlign: 'center',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  noDataSubText: {
+    color: '#aaa',
+    textAlign: 'center',
+    marginTop: 6,
+    fontSize: 13,
   },
 });
 

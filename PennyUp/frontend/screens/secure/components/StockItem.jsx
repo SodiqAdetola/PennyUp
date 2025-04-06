@@ -113,9 +113,9 @@ headerRow: {
 },
   buyButton: {
     alignSelf: 'center',
-    width: '40%',
+    width: '35%',
     margin: 20, 
-    padding: 10, 
+    padding: 8, 
     backgroundColor: '#4CAF50', 
     borderRadius: 5 
 },
@@ -148,7 +148,7 @@ moreInfoContainer: {
 
 hr: {
   borderTopWidth: 1,
-  borderTopColor: 'grey',
+  borderTopColor: '#C0C0C0',
   marginVertical: 10,
 },
 

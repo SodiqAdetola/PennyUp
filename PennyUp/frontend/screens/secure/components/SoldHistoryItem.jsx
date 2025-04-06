@@ -39,7 +39,7 @@ const SoldHistoryItem = ({ trade }) => {
 
         <View style={styles.info}>
           <Text style={styles.label}>Sold Price:</Text>
-          <Text style={styles.white}> ${trade.currentPrice}</Text>
+          <Text style={styles.white}> ${Number(trade.currentPrice).toFixed(2)}</Text>
         </View>
 
         <View style={styles.info}>

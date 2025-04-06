@@ -8,16 +8,19 @@ import axios from 'axios'
 import LogoutModal from './components/LogoutModal'
 import News from './components/News'
 import Guides from './components/Guides'
+import Settings from './Settings'
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com'
 
 const Home = () => {
   const [username, setUsername] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [activeTab, setActiveTab] = useState('news') // To track active tab: 'news' or 'guides'
+  const [activeTab, setActiveTab] = useState('news') // To track active tab: 'news', 'guides', or 'settings'
+  const [showSettings, setShowSettings] = useState(false)
+  const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    getUsername()
+    getUserData()
   }, [])
 
   const LogoutHandler = async () => {
@@ -30,7 +33,7 @@ const Home = () => {
     }
   }
 
-  const getUsername = async () => {
+  const getUserData = async () => {
     const user = FIREBASE_AUTH.currentUser
     console.log('Current user:', user)
 
@@ -48,6 +51,7 @@ const Home = () => {
 
       if (response.data) {
         setUsername(response.data.username)
+        setUserData(response.data)
       } else {
         console.error('No data received')
       }
@@ -67,42 +71,71 @@ const Home = () => {
     setIsModalVisible(false)
   }
 
+  // Toggle settings screen
+  const toggleSettings = () => {
+    setShowSettings(!showSettings)
+  }
+
+  // Update user data in the parent component
+  const updateUserData = (updatedData) => {
+    setUserData(updatedData)
+    setUsername(updatedData.username)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topContainer}>
-        <View style={styles.logoutContainer}>
-          <TouchableOpacity style={styles.logoutButton} onPress={() => setIsModalVisible(true)}>
-            <AntDesign name="logout" size={35} color="white" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Welcome {username}!</Text>
-        </View>
-      </View>
+      {showSettings ? (
+        <Settings 
+          userData={userData} 
+          onClose={toggleSettings} 
+          updateUserData={updateUserData}
+          backendURL={backendURL}
+        />
+      ) : (
+        <>
+          <View style={styles.topContainer}>
+            <View style={styles.headerContainer}>
+              <TouchableOpacity style={styles.settingsButton} onPress={toggleSettings}>
+                <AntDesign name="setting" size={35} color="white" />
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.logoutButton} onPress={() => setIsModalVisible(true)}>
+                <AntDesign name="logout" size={35} color="white" />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcomeText}>Welcome {username}!</Text>
+            </View>
+          </View>
 
-      {/* Bottom content section (70% of screen) */}
-      <View style={styles.bottomContainer}>
-        <View style={styles.tabButtonContainer}>
+          {/* Bottom content section (70% of screen) */}
+          <View style={styles.bottomContainer}>
+            <View style={styles.tabButtonContainer}>
+              <TouchableOpacity 
+                style={[styles.tabButton, activeTab === 'news' ? styles.activeTab : null]} 
+                onPress={() => setActiveTab('news')}
+              >
+                <Text style={[styles.tabButtonText, activeTab === 'news' ? styles.activeTabText : null]}>News</Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.tabButton, activeTab === 'news' ? styles.activeTab : null]} onPress={() => setActiveTab('news')}>
-            <Text style={[styles.tabButtonText, activeTab === 'news' ? styles.activeTabText : null]}>News</Text>
-          </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.tabButton, activeTab === 'guides' ? styles.activeTab : null]} 
+                onPress={() => setActiveTab('guides')}
+              >
+                <Text style={[styles.tabButtonText, activeTab === 'guides' ? styles.activeTabText : null]}>Guides</Text>
+              </TouchableOpacity>
+            </View>
 
-          <TouchableOpacity style={[styles.tabButton, activeTab === 'guides' ? styles.activeTab : null]} onPress={() => setActiveTab('guides')}>
-            <Text style={[styles.tabButtonText, activeTab === 'guides' ? styles.activeTabText : null]}>Guides</Text>
-          </TouchableOpacity>
+            {activeTab === 'news' ? <News /> : <Guides />}
+          </View>
 
-        </View>
-
-        {activeTab === 'news' ? <News /> : <Guides />}
-
-      </View>
-
-      <LogoutModal
-        visible={isModalVisible}
-        onClose={handleLogoutCancel}
-        onConfirm={handleLogoutConfirm}
-      />
+          <LogoutModal
+            visible={isModalVisible}
+            onClose={handleLogoutCancel}
+            onConfirm={handleLogoutConfirm}
+          />
+        </>
+      )}
     </SafeAreaView>
   )
 }
@@ -124,13 +157,21 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  settingsButton: {
+    borderRadius: 5,
+  },
   logoutContainer: {
     alignItems: 'flex-end',
   },
   logoutButton: {
     borderRadius: 5,
-    top: 20,
-    right: 20,
   },
   welcomeContainer: {
     justifyContent: 'center',

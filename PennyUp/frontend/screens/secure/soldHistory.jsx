@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';

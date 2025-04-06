@@ -258,11 +258,19 @@ const Trades = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Live Stock Prices</Text>
+
       <View style={styles.balanceContainer}>
-        <Text style={[styles.balance, styles.white]}>
-          {error ? error : `$${balance !== null ? Number(balance).toFixed(2).toLocaleString() : 'Loading...'}`}
-        </Text>
+        {error ? (
+          <Text style={[styles.balance, styles.white]}>{error}</Text>
+        ) : balance !== null ? (
+          <Text style={[styles.balance, styles.white]}>
+            ${Number(balance).toFixed(2).toLocaleString()}
+          </Text>
+        ) : (
+          <ActivityIndicator size="large" color="white" />
+        )}
       </View>
+
       <TextInput
         style={styles.searchBar}
         placeholder="Search stocks..."

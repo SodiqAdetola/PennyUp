@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 
-const screenWidth = Dimensions.get('window').width;
-
 const StockChart = ({ history, stock }) => {
 
   // Calculate exact min and max prices
@@ -47,7 +45,7 @@ const StockChart = ({ history, stock }) => {
       <View style={styles.chartContainer}>
         <LineChart
           data={chartData}
-          width={screenWidth - 60}
+          width={340}
           height={150}
           spacing={80}
           initialSpacing={30}
