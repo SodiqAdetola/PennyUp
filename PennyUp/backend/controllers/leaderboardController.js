@@ -3,20 +3,18 @@ const Trade = require('../models/Trade');
 
 exports.leaderboard =  async (req, res) => {
     try {
-      // start and end of the current week
+      // start at 1st day of current month
       const today = new Date();
-      const day = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-      const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - day + (day === 0 ? -6 : 1)); // Adjust to Monday
-      startOfWeek.setHours(0, 0, 0, 0);
-      
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
-      endOfWeek.setHours(23, 59, 59, 999);
+      const start = new Date(today.getFullYear(), today.getMonth(), 1);
+
+      const end = new Date(start);
+      end.setMonth(end.getMonth() + 1);
+      end.setDate(0); // Set to last day of the month
+      end.setHours(23, 59, 59, 999); // Set to end of the day
   
-      // Find all trades that were sold during this week
+      // Find all trades that were sold during the month
       const soldTrades = await Trade.find({
-        soldAt: { $gte: startOfWeek, $lte: endOfWeek },
+        soldAt: { $gte: start, $lte: end },
         broughtState: false
       });
       
