@@ -50,7 +50,9 @@ const Leaderboard = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.white, styles.header]}>Leaderboard</Text>
-      <Text style={styles.subtitle}>Weekly Top 10 Revenue</Text>
+      <Text style={styles.subtitle}>Monthly Top 10 Revenue</Text>
+      <Text style={styles.subscript}>(Resets every month)</Text>
+
       
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -91,7 +93,13 @@ const styles = StyleSheet.create({
   subtitle: {
     color: '#4ECDC4',
     fontSize: 16,
-    marginBottom: 20,
+    marginTop: 5,
+  },
+  subscript: {
+    color: 'white',
+    fontSize: 12,
+    marginTop: 3,
+    marginBottom: 10,
   },
   list: {
     width: '100%',

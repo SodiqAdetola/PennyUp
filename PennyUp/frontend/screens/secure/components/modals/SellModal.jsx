@@ -9,9 +9,9 @@ const SellModal = ({ visible, onClose, stock, onConfirm }) => {
           <Text style={styles.modalHeader}>Sell {stock?.stockName || "Stock"}</Text>
           
           <View style={styles.buttonRow}>
-            <Button title="Cancel" onPress={onClose} />
+            <Button title="Cancel" onPress={onClose} color='#72b7ff'/>
             <View style={styles.verticalLine}></View>
-            <Button title="Confirm" onPress={onConfirm} />
+            <Button title="Confirm" onPress={onConfirm} color='#72b7ff'/>
           </View>
         </View>
       </View>

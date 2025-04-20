@@ -25,9 +25,9 @@ const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
             onChangeText={setAmount}
           />
           <View style={styles.buttonRow}>
-            <Button title="Cancel" onPress={onClose} />
+            <Button title="Cancel" onPress={onClose} color='#72b7ff'/>
             <View style={styles.verticalLine}></View>
-            <Button title="Confirm" onPress={handleConfirm} />
+            <Button title="Confirm" onPress={handleConfirm} color='#72b7ff'/>
           </View>
         </View>
       </View>

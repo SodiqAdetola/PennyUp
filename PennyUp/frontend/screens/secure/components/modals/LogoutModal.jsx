@@ -9,9 +9,9 @@ const LogoutModal = ({ visible, onClose, onConfirm }) => {
           <Text style={styles.modalHeader}>Logout</Text>
 
           <View style={styles.buttonRow}>
-            <Button title="Cancel" onPress={onClose} />
+            <Button title="Cancel" onPress={onClose} color='#72b7ff'/>
             <View style={styles.verticalLine}></View>
-            <Button title="Confirm" onPress={onConfirm} />
+            <Button title="Confirm" onPress={onConfirm} color='#72b7ff'/>
           </View>
         </View>
       </View>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    backgroundColor: "#1C3A5B",
+    backgroundColor: '#1C3A5B',
     padding: 20,
     borderRadius: 10,
   },
@@ -38,17 +38,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
-    marginBottom: 10,
+    paddingBottom: 10,
     textAlign: "center",
+    width: "80%",
+    alignSelf: "center",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "white",
   },
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    
   },
   verticalLine: {
     alignSelf: "center",
-    height: "50%",
-    width: 1,
+    height: "100%",
+    width: 0.5,
     backgroundColor: "white",
   },
 });
