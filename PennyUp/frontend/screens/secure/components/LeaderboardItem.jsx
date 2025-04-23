@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: 12,
     marginHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 8,
     borderWidth: 0.5,
     borderColor: '#4ECDC4',
   },
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },  
   rankContainer: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     borderRadius: '50%',
     backgroundColor: '#dba50f',
     justifyContent: 'center',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },  
   rank: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 16,
   },
   username: {
     fontSize: 18,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.3,
     borderTopWidth: 0.3,
     borderColor: '#4ECDC4',
-    padding: 12,
+    padding: 8,
     width: '100%',
     overflow: 'hidden',
   },
@@ -152,11 +152,11 @@ const styles = StyleSheet.create({
     color: '#8A9AAC',
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 3,
   },
   stockInfoRow: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 5,
   },
 
   stockSymbol: {

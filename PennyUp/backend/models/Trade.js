@@ -42,10 +42,6 @@ const Trade = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  profit: {
-    type: Number,
-    required: false,
-  },
 
 });
 
