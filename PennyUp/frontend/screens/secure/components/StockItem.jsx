@@ -103,6 +103,8 @@ headerRow: {
     fontSize: 17,
     color: 'white',
     fontWeight: 'bold',
+    maxWidth: '90%',
+    textAlign: 'center',
 },
   toggleButton: { 
     alignSelf: 'center', 
@@ -114,7 +116,7 @@ headerRow: {
   buyButton: {
     alignSelf: 'center',
     width: '35%',
-    margin: 20, 
+    margin: 0, 
     padding: 8, 
     backgroundColor: '#4CAF50', 
     borderRadius: 5 

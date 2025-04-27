@@ -77,8 +77,19 @@ const Trades = () => {
     };
 
     const stockSymbols = [
-      'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'SPY',
-      'AMGN', 'NFLX', 'BA', 'DIS', 'INTC', 'V', 'WMT',
+      'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'INTC',
+       'CSCO', 'ORCL', 'IBM', 'PLTR', 'NFLX',
+      // Financial Sector
+      'JPM', 'BAC', 'WFC', 'GS', 'V', 'MA', 'AXP', 'BLK',
+      // Healthcare & Pharmaceuticals
+      'JNJ', 'PFE', 'MRK', 'ABBV', 'UNH', 'CVS', 'ABT',
+      // Consumer Goods & Retail
+      'WMT', 'PG', 'KO', 'PEP', 'COST', 'HD', 'MCD', 'NKE', 'DIS',
+      // Industrial & Manufacturing
+      'CAT', 'MMM', 'HON', 'BA', 'LMT', 'GE',
+      //ETFs and Index Funds
+      'SPY', 'QQQ', 'VTI', 'VOO', 'DIA',
+      // Cryptocurrencies
       'BTC-USD', 'ETH-USD', 'BNB-USD', 'XRP-USD', 'DOGE-USD',
     ];
 
@@ -194,15 +205,12 @@ const Trades = () => {
       Alert.alert('Insufficient Balance', 'You do not have enough funds to complete this purchase.');
       return;
     }
-
     const auth = getAuth();
     const user = auth.currentUser;
-
     if (!user) {
       Alert.alert('Authentication Error', 'Please log in again.');
       return;
     }
-
     try {
       const purchasePrice = selectedStock.regularMarketPrice;
       const response = await axios.put(`${backendURL}/stocks/buy`, {
@@ -319,7 +327,7 @@ const styles = StyleSheet.create({
   },
   balance: {
     fontSize: 50,
-    fontWeight: '100',
+    fontWeight: '200',
     textAlign: 'center',
     color: 'white',
   },

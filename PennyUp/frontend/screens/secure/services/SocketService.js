@@ -1,14 +1,16 @@
+
 import { io } from 'socket.io-client';
 
 // Singleton socket instance
 let socket = null;
-let stockDataCache = {};
-let listeners = [];
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
+
+let stockDataCache = {};
+let listeners = [];
 // Initialise socket connection
-const initializeSocket = () => {
+const initialiseSocket = () => {
   if (!socket) {
     socket = io(backendURL);
     
@@ -35,7 +37,7 @@ const initializeSocket = () => {
 
 // Get the socket instance
 const getSocket = () => {
-  return socket || initializeSocket();
+  return socket || initialiseSocket();
 };
 
 // Request updates for specific stock symbols
@@ -46,25 +48,22 @@ const fetchStocks = (symbols) => {
 // Add a listener function to be called when stock data updates
 const addListener = (listenerFn) => {
   listeners.push(listenerFn);
-  
   // Immediately call with current data if available
   if (Object.keys(stockDataCache).length > 0) {
     listenerFn(Object.values(stockDataCache));
   }
-  
-  // Return a function to remove this listener
   return () => {
     listeners = listeners.filter(fn => fn !== listenerFn);
   };
 };
 
-// Notify all listeners of updates
+// function to notify all listeners of updates
 const notifyListeners = () => {
   const stockData = Object.values(stockDataCache);
   listeners.forEach(listener => listener(stockData));
 };
 
-// Clean up the socket connection
+// function to clean up socket connection
 const disconnect = () => {
   if (socket) {
     socket.disconnect();
@@ -74,12 +73,12 @@ const disconnect = () => {
   }
 };
 
-// Get the current price of a specific stock
+// function to get current price of a specific stock
 const getStockPrice = (symbol) => {
   return stockDataCache[symbol]?.regularMarketPrice;
 };
 
-// Get all current stock data
+// function to get all current stock data
 const getAllStockData = () => {
   return Object.values(stockDataCache);
 };

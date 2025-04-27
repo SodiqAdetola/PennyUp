@@ -51,27 +51,11 @@ function SecureTabs() {
 export default function App() {
 
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
-  //useEffect to detect when user logs in or out and set user & user token
+  //useEffect to detect when user logs in or out and set user state
   useEffect(() => {
     const unsubscribe = FIREBASE_AUTH.onAuthStateChanged(async (user) => {
       setUser(user);
-      if (user) {
-        //if user exists, save/set user token
-        try {
-          const token = await user.getIdToken();
-          console.log("User token:", token);
-          // Store token securely
-          await AsyncStorage.setItem('idToken', token);
-          setToken(token);
-        } catch (error) {
-          console.error("Failed to get token:", error);
-        }
-      } else {
-        setToken('');
-        await AsyncStorage.removeItem('idToken'); 
-      }
     });
     return unsubscribe;
   }, []);
@@ -94,7 +78,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false}}>
         { user ? (
-            <Stack.Screen name='SecureTabs' component={SecureTabs} initialParams={{token: token}}/>
+            <Stack.Screen name='SecureTabs' component={SecureTabs}/>
          ) : (
           <>
             <Stack.Screen  name="Login" component={Login}/>

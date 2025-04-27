@@ -3,17 +3,13 @@ const Trade = require('../models/Trade');
 
 exports.leaderboard =  async (req, res) => {
     try {
-      // start at 1st day of current month
+      // Financial year: Calendar year (Jan 1st to Dec 31st)
       const today = new Date();
-      const start = new Date(today.getFullYear(), today.getMonth(), 1);
-
-      const end = new Date(start);
-      end.setMonth(end.getMonth() + 1);
-      end.setDate(0); // Set to last day of the month
-      end.setHours(23, 59, 59, 999); // Set to end of the day
+      const start = new Date(today.getFullYear(), 0, 1);
+      const end = new Date(today.getFullYear(), 11, 31, 23, 59, 59, 999);
   
-      // Find all trades that were sold during the month
-      const soldTrades = await Trade.find({
+      // Find all trades that were sold during the year
+      const Trades = await Trade.find({
         soldAt: { $gte: start, $lte: end },
         broughtState: false
       });
@@ -22,9 +18,8 @@ exports.leaderboard =  async (req, res) => {
       const userProfits = {};
       const userBestTrades = {};
       
-      soldTrades.forEach(trade => {
+      Trades.forEach(trade => {
         const userId = trade.userId.toString();
-        
         // Add to total profit
         if (!userProfits[userId]) {
           userProfits[userId] = 0;

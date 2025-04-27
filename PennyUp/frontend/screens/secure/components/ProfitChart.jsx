@@ -4,14 +4,12 @@ import { LineChart } from 'react-native-gifted-charts';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 
-const screenWidth = Dimensions.get('window').width;
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
 const ProfitChart = () => {
   const [profitData, setProfitData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedPoint, setSelectedPoint] = useState(null);
   const [totalProfit, setTotalProfit] = useState(0);
   const [recentChange, setRecentChange] = useState(0);
 
@@ -82,69 +80,10 @@ const ProfitChart = () => {
     }
   };
 
-  const calculateYAxisLabels = (min, max, targetCount = 4) => {
-    const range = max - min;
-    
-    // Handle case where all values are the same
-    if (range === 0) {
-      return {
-        labels: [min - 1, min, min + 1],
-        min: min - 1,
-        max: min + 1,
-        step: 1
-      };
-    }
-
-    let step = range / targetCount;
-    const exponent = Math.floor(Math.log10(step));
-    const fraction = step / Math.pow(10, exponent);
-    
-    let niceStep;
-    if (fraction <= 1) niceStep = 1 * Math.pow(10, exponent);
-    else if (fraction <= 2) niceStep = 2 * Math.pow(10, exponent);
-    else if (fraction <= 5) niceStep = 5 * Math.pow(10, exponent);
-    else niceStep = 10 * Math.pow(10, exponent);
-    
-    niceStep = Math.max(niceStep, 0.1);
-    
-    // Adjust for very large ranges
-    if (range > 1000) {
-      niceStep = Math.ceil(niceStep / 100) * 100;
-    } else if (range > 100) {
-      niceStep = Math.ceil(niceStep / 10) * 10;
-    }
-
-    const niceMin = Math.floor(min / niceStep) * niceStep;
-    const niceMax = Math.ceil(max / niceStep) * niceStep;
-    
-    const labels = [];
-    for (let value = niceMin; value <= niceMax; value += niceStep) {
-      labels.push(value);
-    }
-
-    // Ensure we have at least 3 distinct labels
-    if (labels.length < 3) {
-      const center = (niceMin + niceMax) / 2;
-      return {
-        labels: [niceMin, center, niceMax],
-        min: niceMin,
-        max: niceMax,
-        step: niceStep
-      };
-    }
-
-    return {
-      labels,
-      min: niceMin,
-      max: niceMax,
-      step: niceStep
-    };
-  };
-
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4ECDC4" />
+        <ActivityIndicator size="large" color="white" />
       </View>
     );
   }
@@ -166,14 +105,17 @@ const ProfitChart = () => {
     );
   }
 
+  // Calculate min and max profits 
   const profits = profitData.map(item => item.profit);
   const maxProfit = Math.max(...profits);
   const minProfit = Math.min(...profits);
 
-  const { labels, min, max, step } = calculateYAxisLabels(minProfit, maxProfit);
-  const shiftAmount = -min;
-  const adjustedRange = max - min;
-  const uniqueLabels = [...new Set(labels)];
+  // Normalise data to start from minProfit
+  const normalizedData = profitData.map(item => ({
+    ...item,
+    value: item.profit - minProfit,
+    actualValue: item.profit
+  }));
 
   const isPositive = totalProfit >= 0;
   const isRecentPositive = recentChange >= 0;
@@ -195,10 +137,7 @@ const ProfitChart = () => {
         <View style={styles.chartContainer}>
           <LineChart
             style={styles.chart}
-            data={profitData.map(item => ({
-              ...item,
-              value: item.value + shiftAmount
-            }))}
+            data={normalizedData}
             width={330}
             height={120}
             spacing={60}
@@ -206,14 +145,11 @@ const ProfitChart = () => {
             endSpacing={20}
             thickness={2}
             color={lineColor}
-            maxValue={adjustedRange}
+            maxValue={maxProfit - minProfit}
             minValue={0}
             dataPointsColor={lineColor}
             dataPointsRadius={4}
-            onPointPress={(point) => setSelectedPoint({
-              ...point,
-              value: point.value - shiftAmount
-            })}
+            onPointPress={(point) => setSelectedPoint(point)}
             enablePanGesture
             verticalLinesColor="rgba(255,255,255,0.1)"
             horizontalLinesColor="rgba(255,255,255,0.1)"
@@ -233,16 +169,17 @@ const ProfitChart = () => {
             showXAxisLabel
             yAxisLabelSuffix=""
             yAxisTextNumberOfLines={1}
-            noOfSections={uniqueLabels.length - 1}
-            yAxisLabelTexts={uniqueLabels.map(label => 
-              `$${Math.abs(label) < 10 ? label.toFixed(1) : Math.round(label)}`
-            )}
-            formatYLabel={() => ''}
+            noOfSections={4}
             scrollToEnd={true}
             scrollAnimation={true}
             rulesType="solid"
             rulesColor="rgba(255,255,255,0.1)"
-            yAxisOffset={0}
+            formatYLabel={(value) => {
+              if (value !== undefined && value !== null) {
+                return `$${(Number(value) + minProfit).toFixed(2)}`;
+              }
+              return '';
+            }}
           />
         </View>
       </View>
@@ -253,37 +190,39 @@ const ProfitChart = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#162C46',
-    padding: 14,
+    paddingHorizontal: 14,
+    paddingTop: 5,
+    paddingBottom: 0,
     borderRadius: 12,
   },
   chart: {
-    minHeight: 150,
+    Height: '35%',
   },
   headerContainer: {
-    marginBottom: 15,
+    marginBottom: 10,
   },
   title: {
     color: '#4ECDC4',
     fontSize: 15,
     fontWeight: '600',
-    marginBottom: 6,
   },
   priceText: {
     color: 'white',
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
+    marginTop: 4,
+
   },
   changeText: {
     fontSize: 14,
-    marginTop: 4,
   },
   loadingContainer: {
-    height: 180,
+    backgroundColor: '#162C46',
+    padding: 14,
+    borderRadius: 12,
+    height: '35%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#162C46',
-    borderRadius: 12,
-    margin: 10,
   },
   errorContainer: {
     height: 80,
@@ -316,6 +255,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 6,
     fontSize: 13,
+  },
+  chartContainer: {
+    paddingBottom: 10,
   },
 });
 

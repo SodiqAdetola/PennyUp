@@ -104,7 +104,8 @@ const Home = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.welcomeText}>Welcome {username}!</Text>
+              <Text style={styles.welcomeText}>Welcome</Text>
+              <Text style={styles.welcomeText}>{username}</Text>
             </View>
           </View>
 
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     maxWidth: '80%',
     alignSelf: 'center',
-    fontWeight: '100',
+    fontWeight: '200',
     textAlign: 'center',
     color: 'white',
   },

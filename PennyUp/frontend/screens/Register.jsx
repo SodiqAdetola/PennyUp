@@ -16,7 +16,7 @@ const Register = ( { navigation } ) => {
   const auth = FIREBASE_AUTH;
 
 
-  const registerHandler = async () => {
+  const RegisterHandler = async () => {
     if (username == '') {
         alert(' Please enter a Username!')
         return;
@@ -90,7 +90,7 @@ return (
           </View>
 
           <View >
-              <TouchableOpacity style={[styles.button,]} onPress={registerHandler}>
+              <TouchableOpacity style={[styles.button,]} onPress={RegisterHandler}>
                   <Text style={[styles.buttonText]} >Register</Text>
               </TouchableOpacity>
           </View>
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   Logo: {
       flex: 1,
       justifyContent: 'center',
+      top: 40,
       alignItems: 'center',
   },
 

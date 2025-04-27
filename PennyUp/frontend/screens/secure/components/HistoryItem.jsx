@@ -13,6 +13,17 @@ const HistoryItem = ({ trade, handleSellPress }) => {
   const stockProfitLossPercentage = (trade.currentPrice - trade.purchasePrice) / trade.purchasePrice; 
   const personalProfitLoss = (initialPurchaseAmount * stockProfitLossPercentage);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   return ( 
     <View style={styles.stockItem}>
       <Text style={[styles.white, styles.stockName]}>{trade.stockName}</Text>
@@ -45,7 +56,7 @@ const HistoryItem = ({ trade, handleSellPress }) => {
 
         <View style={styles.info}>
           <Text style={styles.label}>Date & Time of Purchase: </Text>
-          <Text style={styles.white}>{new Date(trade.createdAt).toLocaleString()}</Text>
+          <Text style={styles.white}>{formatDate(trade.createdAt)}</Text>
         </View>
 
       </View>
@@ -71,13 +82,13 @@ const styles = StyleSheet.create({
   stockName: { 
     fontSize: 17,
     fontWeight: 'bold',
-    padding: 10,
+    paddingTop: 10,
+    paddingLeft: 10,
   },
   profitLoss: { 
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center', 
-    marginVertical: 5,
   },
   sellButton: {
     alignSelf: 'center',

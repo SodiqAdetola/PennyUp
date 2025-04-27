@@ -8,7 +8,7 @@ import SocketService from './services/SocketService';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
-const History = ({ navigation }) => {
+const BroughtTradeHistory = ({ navigation }) => {
   const [broughtTrades, setBroughtTrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -192,7 +192,7 @@ const History = ({ navigation }) => {
   );
 };
 
-export default History;
+export default BroughtTradeHistory;
 
 const styles = StyleSheet.create({
   container: {

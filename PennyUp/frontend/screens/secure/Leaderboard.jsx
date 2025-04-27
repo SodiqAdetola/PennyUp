@@ -14,7 +14,7 @@ const Leaderboard = () => {
     try {
       setLoading(true);
       const response = await axios.get(`${backendURL}/leaderboard`);
-      setLeaderboard(response.data.leaderboard.slice(0,10));
+      setLeaderboard(response.data.leaderboard.slice(0,30));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching leaderboard data:', error);
@@ -50,13 +50,13 @@ const Leaderboard = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.white, styles.header]}>Leaderboard</Text>
-      <Text style={styles.subtitle}>Monthly Top 10 Revenue</Text>
-      <Text style={styles.subscript}>(Resets every month)</Text>
+      <Text style={styles.subtitle}>Yearly Top 30 Revenue</Text>
+      <Text style={styles.subscript}>(Resets Every New Years)</Text>
 
       
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#4ECDC4" />
+          <ActivityIndicator size="large" color="white" />
         </View>
       ) : leaderboard.length > 0 ? (
         <FlatList
@@ -67,7 +67,7 @@ const Leaderboard = () => {
         />
       ) : (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No trades this week</Text>
+          <Text style={styles.emptyText}>No trades</Text>
         </View>
       )}
     </SafeAreaView>

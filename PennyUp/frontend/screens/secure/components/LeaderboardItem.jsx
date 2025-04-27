@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 0.5,
-    borderColor: '#4ECDC4',
+    borderColor: 'grey',
   },
   infoContainer: { 
     flexDirection: 'row',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '600',
     marginBottom: 8,
   },
   profit: {
@@ -127,13 +127,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginRight: 8,
     textAlign: 'right',
+    color: 'white',
   },
   bestTradeContainer: {
     backgroundColor: '#0F1F30',
     marginBottom: 12,
     borderBottomWidth: 0.3,
     borderTopWidth: 0.3,
-    borderColor: '#4ECDC4',
+    borderColor: 'grey',
     padding: 8,
     width: '100%',
     overflow: 'hidden',

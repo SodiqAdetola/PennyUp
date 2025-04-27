@@ -9,6 +9,16 @@ const User = new mongoose.Schema({
         unique: true
     },
 
+    broughtTrades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Trade',
+    }],
+
+    soldTrades: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Trade',
+    }],
+
     username: {
         type: String,
         required: true
@@ -19,15 +29,6 @@ const User = new mongoose.Schema({
         default: 10000.00
     },
 
-    broughtTrades: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trade',
-    }],
-
-    soldTrades: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trade',
-    }],
     favouriteStocks: [{
         type: String,
         required: false

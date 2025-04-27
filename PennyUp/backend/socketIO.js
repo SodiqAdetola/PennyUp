@@ -23,10 +23,6 @@ function initialiseSocketIO(server) {
                 period1: '2024-06-30',
                 interval: '1wk',
               });
-
-              // Log data for each stock
-              console.log(`Fetched data for ${symbol}:`, quote, history);
-
               return {
                 symbol,
                 longName: quote.longName,
@@ -62,7 +58,7 @@ function initialiseSocketIO(server) {
       const interval = setInterval(async () => {
         const updatedData = await fetchStockData(symbols);
         socket.emit('stockUpdates', updatedData);
-      }, 120000); // 2 minute
+      }, 120000); // update every 2 minute
 
       socket.on('disconnect', () => {
         clearInterval(interval);

@@ -7,7 +7,7 @@ import ProfitChart from './components/ProfitChart';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
 
-const SoldHistory = ({ navigation }) => {
+const SoldTradeHistory = ({ navigation }) => {
   const [soldTrades, setSoldTrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +66,9 @@ const SoldHistory = ({ navigation }) => {
       </View>
 
       {isLoading ? (
-        <ActivityIndicator size="large" color="white" />
+        <View style={[styles.loadingContainer]}>
+          <ActivityIndicator size="large" color="white"/>
+        </View>
       ) : error ? (
         <Text style={styles.error}>{error}</Text>
       ) : soldTrades.length === 0 ? (
@@ -91,7 +93,7 @@ const SoldHistory = ({ navigation }) => {
   );
 };
 
-export default SoldHistory;
+export default SoldTradeHistory;
 
 const styles = StyleSheet.create({
   container: {
@@ -145,5 +147,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 80,
     textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

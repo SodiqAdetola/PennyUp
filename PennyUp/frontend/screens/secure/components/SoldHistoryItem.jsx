@@ -11,6 +11,17 @@ const SoldHistoryItem = ({ trade }) => {
 
   const profit = Number(trade.profit).toFixed(2); 
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   console.log("Profit: ", profit);
   return ( 
     <View style={styles.stockItem}>
@@ -44,12 +55,12 @@ const SoldHistoryItem = ({ trade }) => {
 
         <View style={styles.info}>
           <Text style={styles.label}>Date & Time of Purchase:</Text>
-          <Text style={styles.white}> {new Date(trade.createdAt).toLocaleString()}</Text>
+          <Text style={styles.white}> {formatDate(trade.createdAt)}</Text>
         </View>
 
         <View style={styles.info}>
           <Text style={styles.label}>Date & Time Sold:</Text>
-          <Text style={styles.white}> {new Date(trade.soldAt).toLocaleString()}</Text>
+          <Text style={styles.white}> {formatDate(trade.soldAt)}</Text>
         </View>
 
       </View>

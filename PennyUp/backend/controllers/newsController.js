@@ -16,3 +16,4 @@ exports.news = async (req, res) => {
     });
   }
 };
+
