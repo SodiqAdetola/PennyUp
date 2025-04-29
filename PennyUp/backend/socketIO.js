@@ -34,6 +34,10 @@ function initialiseSocketIO(server) {
                 epsCurrentYear: quote.epsCurrentYear,
                 epsTrailingTwelveMonths: quote.epsTrailingTwelveMonths,
                 epsForward: quote.epsForward,
+                fiftyTwoWeekLow: quote.fiftyTwoWeekLow,
+                fiftyTwoWeekHigh: quote.fiftyTwoWeekHigh,
+                regularMarketChangePercent: quote.regularMarketChangePercent,
+                regularMarketChange: quote.regularMarketChange,
                 history,
           
               };

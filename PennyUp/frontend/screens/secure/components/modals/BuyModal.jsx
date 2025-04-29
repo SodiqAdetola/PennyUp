@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, View, Text, TextInput, Button, StyleSheet } from "react-native";
 
 const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
@@ -8,8 +8,13 @@ const BuyModal = ({ visible, onClose, onConfirm, stock }) => {
     const investmentAmount = parseFloat(amount);
     if (investmentAmount > 0) {
       onConfirm(investmentAmount);
+    }};
+
+  
+    useEffect(() => {
+      setAmount("");
     }
-  };
+    , [visible]);
 
   return (
     <Modal visible={visible} transparent animationType="slide">
@@ -71,8 +76,8 @@ const styles = StyleSheet.create({
   },
   verticalLine: {
     alignSelf: "center",
-    height: "50%",
+    height: "80%",
     width: 1,
-    backgroundColor: "white",
+    backgroundColor: "#ddd",
   },
 });

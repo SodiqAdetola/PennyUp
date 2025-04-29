@@ -1,7 +1,6 @@
 
 import { io } from 'socket.io-client';
 
-// Singleton socket instance
 let socket = null;
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
@@ -14,9 +13,9 @@ const initialiseSocket = () => {
   if (!socket) {
     socket = io(backendURL);
     
-    // Set up the listener for stock updates
+    // Set up listener for stock updates
     socket.on('stockUpdates', (data) => {
-      // Update our cache with the latest data
+      // Update cache with the latest data
       data.forEach(stock => {
         if (stock && stock.symbol) {
           stockDataCache[stock.symbol] = stock;

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
 const NewsItem = ({ item }) => {
   const [isExpanded, setIsExpanded] = useState(false);

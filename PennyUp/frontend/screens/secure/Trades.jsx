@@ -5,7 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import StockItem from './components/StockItem';
 import BuyModal from './components/modals/BuyModal';
-import SocketService from './services/SocketService'; // Import the shared service
+import SocketService from './services/SocketService'; // socket shared service
 import { AntDesign } from '@expo/vector-icons';
 
 const backendURL = 'https://pennyup-backend-a50ab81d5ff6.herokuapp.com';
@@ -88,7 +88,7 @@ const Trades = () => {
       // Industrial & Manufacturing
       'CAT', 'MMM', 'HON', 'BA', 'LMT', 'GE',
       //ETFs and Index Funds
-      'SPY', 'QQQ', 'VTI', 'VOO', 'DIA',
+      'SPY', 'QQQ', 'VTI', 'VOO', 'DIA','EWU',
       // Cryptocurrencies
       'BTC-USD', 'ETH-USD', 'BNB-USD', 'XRP-USD', 'DOGE-USD',
     ];
@@ -154,7 +154,7 @@ const Trades = () => {
 
       // Sort stocks by favorite status
       const sortedStocks = [...updatedStocks].sort((a, b) => 
-        (b.favourite === true) - (a.favourite === true)
+        (a.favourite === true) - (b.favourite === true)
       );
 
       setStocks(sortedStocks);

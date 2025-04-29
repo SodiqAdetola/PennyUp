@@ -37,9 +37,12 @@ const StockChart = ({ history, stock }) => {
         <Text style={styles.priceText}>
           ${Number(stock.regularMarketPrice).toFixed(2)}
         </Text>
-        <Text style={[styles.changeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={[styles.subheading]}>This Week: </Text>
+        <Text style={[styles.changeText, { color: isPositive ? '#34C759' : '#ff4d4d' }]}>
           {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercentage}%)
         </Text>
+        </View>
       </View>
 
       <View style={styles.chartContainer}>
@@ -92,6 +95,10 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     marginBottom: 20,
+  },
+  subheading: {
+    color: '#8A9AAC',
+    fontSize: 13,
   },
   chartContainer: {
     paddingBottom: 20,

@@ -11,6 +11,7 @@
         "express": "^4.21.1",
         "firebase-admin": "^13.0.0",
         "mongoose": "^8.8.1",
+        "react-native-markdown-display": "^7.0.2",
         "socket.io": "^4.8.1",
         "yahoo-finance2": "^2.13.3"
     },

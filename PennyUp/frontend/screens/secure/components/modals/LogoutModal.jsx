@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "80%",
     alignSelf: "center",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255, 255, 255, 0.3)",
   },
   buttonRow: {
     flexDirection: "row",
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
   verticalLine: {
     alignSelf: "center",
     height: "100%",
-    width: 0.5,
-    backgroundColor: "white",
+    width: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+
   },
 });

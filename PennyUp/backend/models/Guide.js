@@ -5,6 +5,14 @@ const Guide = new mongoose.Schema({
         type: String,
         required: true,
     },
+    summary: {
+        type: String,
+        required: true,
+    },
+    prologue: {
+        type: String,
+        required: true,
+    },
     content: {
         type: String,
         required: true,

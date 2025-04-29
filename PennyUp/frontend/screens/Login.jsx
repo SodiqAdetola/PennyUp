@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
     LogoText: {
         color: 'white',
-        fontSize: 50,
+        fontSize: 60,
         fontWeight: '500'
     },
 
