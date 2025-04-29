@@ -52,12 +52,12 @@ const SoldHistoryItem = ({ trade }) => {
       <View style={styles.infoContainer}>
 
         <View style={styles.info}>
-          <Text style={styles.label}>Purchase Amount: </Text>
+          <Text style={styles.label}>Investment Amount: </Text>
             <Text style={styles.white}> ${trade.amount}</Text>
         </View>
 
         <View style={styles.info}>
-          <Text style={styles.label}>Purchase Price: </Text>
+          <Text style={styles.label}>Entry Price: </Text>
           <Text style={styles.white}>${trade.purchasePrice}</Text>
         </View>
 
@@ -67,7 +67,7 @@ const SoldHistoryItem = ({ trade }) => {
         </View>
 
         <View style={styles.info}>
-          <Text style={styles.label}>Date & Time of Purchase:</Text>
+          <Text style={styles.label}>Date & Time Bought:</Text>
           <Text style={styles.white}> {formatDate(trade.createdAt)}</Text>
         </View>
 

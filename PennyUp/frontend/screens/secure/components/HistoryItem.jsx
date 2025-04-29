@@ -51,11 +51,11 @@ const HistoryItem = ({ trade, handleSellPress }) => {
       <View style={styles.infoContainer}>
         <View style={styles.infoRow}>
           <View style={styles.info}>
-            <Text style={styles.label}>Purchase Amount: </Text>
+            <Text style={styles.label}>Investment Amount: </Text>
             <Text style={styles.value}>${trade.amount}</Text>
           </View>
           <View style={styles.info}>
-            <Text style={styles.label}>Purchase Price: </Text>
+            <Text style={styles.label}>Entry Price: </Text>
             <Text style={styles.value}>${Number(trade.purchasePrice).toFixed(2)}</Text>
           </View>
         </View>
@@ -66,7 +66,7 @@ const HistoryItem = ({ trade, handleSellPress }) => {
             <Text style={styles.value}>${Number(trade.currentPrice).toFixed(2)}</Text>
           </View>
           <View style={styles.info}>
-            <Text style={styles.label}>Purchase Date: </Text>
+            <Text style={styles.label}>Date & Time Bought: </Text>
             <Text style={styles.value}>{formatDate(trade.createdAt)}</Text>
           </View>
         </View>
@@ -148,10 +148,12 @@ const styles = StyleSheet.create({
   label: { 
     color: '#8A9AAC',
     fontSize: 14,
-    marginBottom: 2,
+    marginBottom: 1,
   },
   value: {
-    color: 'white', 
+    color: 'white',
+    fontSize: 14,
+
   },
   infoContainer: {
     paddingLeft: 16,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
   },
   sellButton: {
     alignSelf: 'center',
-    width: '35%',
+    width: '30%',
     padding: 6, 
     backgroundColor: '#ff4d4d', 
     borderRadius: 5,
@@ -169,8 +171,8 @@ const styles = StyleSheet.create({
   sellText: { 
     color: 'white', 
     textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 16,
+    fontWeight: '500',
+    fontSize: 15,
   },
   white: { 
     color: 'white' 

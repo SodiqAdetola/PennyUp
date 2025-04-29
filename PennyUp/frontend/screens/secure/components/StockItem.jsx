@@ -302,27 +302,28 @@ const styles = StyleSheet.create({
   },
   buyButton: {
     alignSelf: 'center',
-    width: '35%',
+    width: '30%',
     padding: 6, 
     backgroundColor: '#34C759', 
     borderRadius: 5,
     marginTop: 60,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   buyText: { 
     color: 'white', 
     textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 16,
+    fontWeight: '500',
+    fontSize: 15,
   },
   toggleButton: { 
     alignSelf: 'center',
     backgroundColor: 'rgba(0,0,0,0.15)',
     borderRadius: 20,
     padding: 4,
-    marginTop: 10,
     width: 100,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
   },
 });
 
