@@ -16,26 +16,28 @@ Expo Go app on your mobile device
 
 ##Installation
 
-###Clone the repository
-bashgit clone https://github.com/yourusername/PennyUp.git
+1. **Clone the repository**
 
-1. **Navigate to the project directory**
+
+2. **Navigate to the project directory**
 bashcd PennyUp
 
-2. **Navigate to the frontend directory**
+3. **Navigate to the frontend directory**
 bashcd frontend
 
-3. **Install dependencies**
+4. **Install dependencies**
 ```bash npm install```
 
-4. ##Running the App
+ ##Running the App
 
-Start the Expo development server using terminal
+5. Start the Expo development server using terminal
 ```bash npx expo start --tunnel -c ```
 
 The --tunnel flag allows you to run the app over your local network, and -c clears the cache.
 Launch the app on your device
 
-Open the Expo Go app on your mobile device
-Scan the QR code displayed in your terminal or browser
+6. Download and Open the Expo Go app on your mobile device
+
+7. Scan the QR code displayed in your terminal or browser
+
 The app will load and run on your device
