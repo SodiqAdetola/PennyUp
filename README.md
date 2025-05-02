@@ -5,6 +5,7 @@ PennyUp is a mobile application built with Expo, designed to help users manage a
 ## How to Run the Project (Frontend)
 
 **Backend is already deployed and running on heroku**
+**Database is available on MongoDB atlas, no setup required**
 
 Follow the steps below to set up and run the project locally:
 
