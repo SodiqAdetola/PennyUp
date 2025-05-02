@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     borderRadius: 10,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#f0f0f0',
     paddingHorizontal: 10,
   },
   searchInput: {

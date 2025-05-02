@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#f9f9f9',
     borderRadius: 10,
-    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.1)',
+    boxShadow: '2px 2px 8px rgba(0, 0, 0, 0.1)',
   },
   thumbnail: {
     width: 80,

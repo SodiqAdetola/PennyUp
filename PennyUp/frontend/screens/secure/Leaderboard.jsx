@@ -52,8 +52,9 @@ const Leaderboard = () => {
       
       {/* Header Section */}
       <View style={styles.headerContainer}>
+        <Text style={[styles.white, styles.header]}>Leaderboard </Text>
         <MaterialCommunityIcons name="trophy" size={28} color="#D4AF37" style={styles.headerIcon} />
-        <Text style={[styles.white, styles.header]}>Leaderboard</Text>
+
       </View>
       
       {/* Subtitle Section */}

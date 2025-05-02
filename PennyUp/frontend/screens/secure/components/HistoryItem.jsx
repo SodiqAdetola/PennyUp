@@ -51,7 +51,7 @@ const HistoryItem = ({ trade, handleSellPress }) => {
       <View style={styles.infoContainer}>
         <View style={styles.infoRow}>
           <View style={styles.info}>
-            <Text style={styles.label}>Investment Amount: </Text>
+            <Text style={styles.label}>Invested Amount: </Text>
             <Text style={styles.value}>${trade.amount}</Text>
           </View>
           <View style={styles.info}>

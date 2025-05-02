@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   // Profit
   profitRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    marginLeft: 2,
     gap: 10,
     alignItems: 'center',
     marginVertical: 0,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     width: '50%',
-    padding: 8,
+    padding: 6,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.03)',
   },
