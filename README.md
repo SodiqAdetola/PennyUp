@@ -6,7 +6,7 @@ PennyUp is a mobile application built with Expo, designed to help users manage a
 
 Follow the steps below to set up and run the project locally:
 
-Prerequisites
+###Prerequisites
 Before you begin, ensure you have the following installed:
 
 Node.js (v14 or later)
@@ -14,27 +14,25 @@ npm or yarn
 Expo CLI
 Expo Go app on your mobile device
 
-Installation
+##Installation
 
-Clone the repository
+###Clone the repository
 bashgit clone https://github.com/yourusername/PennyUp.git
 
-Navigate to the project directory
+1. **Navigate to the project directory**
 bashcd PennyUp
 
-Navigate to the frontend directory
+2. **Navigate to the frontend directory**
 bashcd frontend
 
-Install dependencies
-bashnpm install
-# or
-yarn install
+3. **Install dependencies**
+```bash npm install```
 
+4. ##Running the App
 
-Running the App
+Start the Expo development server using terminal
+```bash npx expo start --tunnel -c ```
 
-Start the Expo development server
-bashnpx expo start --tunnel -c
 The --tunnel flag allows you to run the app over your local network, and -c clears the cache.
 Launch the app on your device
 
