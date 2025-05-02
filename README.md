@@ -2,7 +2,9 @@
 
 PennyUp is a mobile application built with Expo, designed to help users manage and grow their savings in a smart and engaging way.
 
-## How to Run the Project
+## How to Run the Project (Frontend)
+
+**Backend is already deployed and running on heroku**
 
 Follow the steps below to set up and run the project locally:
 
