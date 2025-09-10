@@ -13,6 +13,7 @@ PennyUp is a mobile application built with Expo, designed to help users manage a
 
 <img width="196" height="423" alt="Screenshot 2025-09-10 at 23 40 02" src="https://github.com/user-attachments/assets/9f31fb1d-a1f7-4896-a56d-eaba9efe53e6" />
 <img width="196" height="423" alt="Screenshot 2025-09-10 at 23 35 44" src="https://github.com/user-attachments/assets/d170f176-82bc-40d1-a24f-46d8b94c7665" />
+<img width="197" height="424" alt="Screenshot 2025-09-10 at 23 36 10" src="https://github.com/user-attachments/assets/bf1c394c-1ae3-415a-baa0-547832088fcf" />
 
 
 
