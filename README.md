@@ -1,7 +1,6 @@
 
 # PennyUp
-
-PennyUp is a mobile application built with Expo, designed to help users manage and grow their savings in a smart and engaging way.
+PennyUp is a simulated trading mobile application built with Expo, designed to help users manage and grow their savings in a smart and engaging way.
 
 <img width="197" height="424" alt="Screenshot 2025-09-10 at 23 32 39" src="https://github.com/user-attachments/assets/396677d4-c2d9-4920-ba9f-a07cf5041ffd" />
 <img width="197" height="422" alt="Screenshot 2025-09-10 at 23 37 02" src="https://github.com/user-attachments/assets/e490b95c-be58-4153-91a3-34bcad58fb2c" />
