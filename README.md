@@ -3,18 +3,18 @@
 
 PennyUp is a mobile application built with Expo, designed to help users manage and grow their savings in a smart and engaging way.
 
-<img height="179" alt="IMG_9457" src="https://github.com/user-attachments/assets/32b77b46-31e8-4f9c-a7c1-8b0f4a8de354" />
-<img height="179" alt="IMG_9473" src="https://github.com/user-attachments/assets/d709bac9-184d-4bd9-ab39-1acc9cd7f4ec" />
-<img height="179" alt="IMG_9485" src="https://github.com/user-attachments/assets/e92a665e-37b6-4b21-a479-833bde829f08" />
-<img height="179" alt="IMG_9484" src="https://github.com/user-attachments/assets/2f01cf23-c8a2-4a9d-b450-9906990d89d7" />
+<img width="197" height="424" alt="Screenshot 2025-09-10 at 23 32 39" src="https://github.com/user-attachments/assets/396677d4-c2d9-4920-ba9f-a07cf5041ffd" />
+<img width="197" height="422" alt="Screenshot 2025-09-10 at 23 37 02" src="https://github.com/user-attachments/assets/e490b95c-be58-4153-91a3-34bcad58fb2c" />
+<img width="198" height="423" alt="Screenshot 2025-09-10 at 23 37 42" src="https://github.com/user-attachments/assets/5fbe5479-fdb5-4034-af27-26de6611963f" />
+<img width="197" height="424" alt="Screenshot 2025-09-10 at 23 37 55" src="https://github.com/user-attachments/assets/f89c5672-2da8-4574-add3-ffc6c15f841f" />
+<img width="197" height="424" alt="Screenshot 2025-09-10 at 23 34 35" src="https://github.com/user-attachments/assets/9fdc48bd-eb03-4261-93ef-8f9a0dd88595" />
+<img width="196" height="423" alt="Screenshot 2025-09-10 at 23 39 27" src="https://github.com/user-attachments/assets/1c9376f2-8198-42ef-8598-6ccbf8e7180c" />
+<img width="196" height="423" alt="Screenshot 2025-09-10 at 23 39 48" src="https://github.com/user-attachments/assets/a87d16f9-647b-4afa-a6d1-6bb066a62463" />
 
-![IMG_D9E872C793E6-1](https://github.com/user-attachments/assets/328705df-c4e5-4354-9238-adc74c824a1e)
-<img height="179" alt="IMG_9503" src="https://github.com/user-attachments/assets/6966c863-5ced-4ec2-8ff0-03199d0b8c83" />
-<img height="179" alt="IMG_9504" src="https://github.com/user-attachments/assets/73f1c53f-23ac-470a-bd49-d5d29f5a6a33" />
-<img height="179" alt="IMG_9478" src="https://github.com/user-attachments/assets/ba32b00a-8c23-4bb6-b33a-08a5bef7b005" />
-<img height="179" alt="IMG_9482" src="https://github.com/user-attachments/assets/24cce2e5-c843-4b14-b456-06224dcc0ad9" />
-<img height="179" alt="IMG_9479" src="https://github.com/user-attachments/assets/00808af1-bf1e-4963-8ac3-1f36959d6b63" />
-![IMG_1FD2FCC27FEF-1](https://github.com/user-attachments/assets/3167b9ae-3db8-46b9-bd3c-b7bea7d65020)
+<img width="196" height="423" alt="Screenshot 2025-09-10 at 23 40 02" src="https://github.com/user-attachments/assets/9f31fb1d-a1f7-4896-a56d-eaba9efe53e6" />
+<img width="196" height="423" alt="Screenshot 2025-09-10 at 23 35 44" src="https://github.com/user-attachments/assets/d170f176-82bc-40d1-a24f-46d8b94c7665" />
+
+
 
 
 ## How to Run the Project (Frontend)
