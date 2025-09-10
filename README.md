@@ -3,17 +3,17 @@
 
 PennyUp is a mobile application built with Expo, designed to help users manage and grow their savings in a smart and engaging way.
 
-<img width="828" height="1792" alt="IMG_9457" src="https://github.com/user-attachments/assets/32b77b46-31e8-4f9c-a7c1-8b0f4a8de354" />
-<img width="828" height="1792" alt="IMG_9473" src="https://github.com/user-attachments/assets/d709bac9-184d-4bd9-ab39-1acc9cd7f4ec" />
-<img width="828" height="1792" alt="IMG_9485" src="https://github.com/user-attachments/assets/e92a665e-37b6-4b21-a479-833bde829f08" />
-<img width="828" height="1792" alt="IMG_9484" src="https://github.com/user-attachments/assets/2f01cf23-c8a2-4a9d-b450-9906990d89d7" />
+<img height="179" alt="IMG_9457" src="https://github.com/user-attachments/assets/32b77b46-31e8-4f9c-a7c1-8b0f4a8de354" />
+<img height="179" alt="IMG_9473" src="https://github.com/user-attachments/assets/d709bac9-184d-4bd9-ab39-1acc9cd7f4ec" />
+<img height="179" alt="IMG_9485" src="https://github.com/user-attachments/assets/e92a665e-37b6-4b21-a479-833bde829f08" />
+<img height="179" alt="IMG_9484" src="https://github.com/user-attachments/assets/2f01cf23-c8a2-4a9d-b450-9906990d89d7" />
 
 ![IMG_D9E872C793E6-1](https://github.com/user-attachments/assets/328705df-c4e5-4354-9238-adc74c824a1e)
-<img width="828" height="1792" alt="IMG_9503" src="https://github.com/user-attachments/assets/6966c863-5ced-4ec2-8ff0-03199d0b8c83" />
-<img width="828" height="1792" alt="IMG_9504" src="https://github.com/user-attachments/assets/73f1c53f-23ac-470a-bd49-d5d29f5a6a33" />
-<img width="828" height="1792" alt="IMG_9478" src="https://github.com/user-attachments/assets/ba32b00a-8c23-4bb6-b33a-08a5bef7b005" />
-<img width="828" height="1792" alt="IMG_9482" src="https://github.com/user-attachments/assets/24cce2e5-c843-4b14-b456-06224dcc0ad9" />
-<img width="828" height="1792" alt="IMG_9479" src="https://github.com/user-attachments/assets/00808af1-bf1e-4963-8ac3-1f36959d6b63" />
+<img height="179" alt="IMG_9503" src="https://github.com/user-attachments/assets/6966c863-5ced-4ec2-8ff0-03199d0b8c83" />
+<img height="179" alt="IMG_9504" src="https://github.com/user-attachments/assets/73f1c53f-23ac-470a-bd49-d5d29f5a6a33" />
+<img height="179" alt="IMG_9478" src="https://github.com/user-attachments/assets/ba32b00a-8c23-4bb6-b33a-08a5bef7b005" />
+<img height="179" alt="IMG_9482" src="https://github.com/user-attachments/assets/24cce2e5-c843-4b14-b456-06224dcc0ad9" />
+<img height="179" alt="IMG_9479" src="https://github.com/user-attachments/assets/00808af1-bf1e-4963-8ac3-1f36959d6b63" />
 ![IMG_1FD2FCC27FEF-1](https://github.com/user-attachments/assets/3167b9ae-3db8-46b9-bd3c-b7bea7d65020)
 
 
